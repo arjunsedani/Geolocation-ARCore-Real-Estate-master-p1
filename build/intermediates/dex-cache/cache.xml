@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\sedani.ab\.android\build-cache\1e2fc8ed81d4a9cdc542e5cdb782ee24446730c6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="889352e4b8098411a2d5734e26fd3db16ceb1d9e">
+        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\pre-dexed\debug\classes_d15c3458928dd54eca106a2a12079ec15c5b91b2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\sedani.ab\.android\build-cache\1e2fc8ed81d4a9cdc542e5cdb782ee24446730c6\output\jars\libs\arcore_client.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="033d5155085fe9cb58612f4e899182c0b08ca0b7">
+        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\pre-dexed\debug\arcore_client_44d17cff8707896cbe59f8fa4576ad595cbaabd0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\obj-0.2.1\obj-0.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d2df8e6fa7ba5aae4d0f847459ddd345d550ffaa">
+        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\pre-dexed\debug\obj-0.2.1_6d467fee92a1f828f43bfa337bdaa7e5f2a9e3be.jar" />
+    </item>
+
+</items>

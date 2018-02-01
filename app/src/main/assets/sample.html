@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Real Estate Showcase</title>
+    <meta name="description" content="3d.io Real Estate Showcase with minimap, camera tour, google maps and info box">
+    <!-- aframe library -->
+    <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+    <!-- 3dio library. distributed via 'npm run dist' in https://github.com/archilogic-com/3dio-js -->
+    <script src="https://3d.io/releases/3dio-js/1.0.x-beta/3dio.min.js"></script>
+
+    <!-- The "Camera Bookmarks" feature requires the animation component from Keving Ngo
+    https://github.com/ngokevin/kframe/tree/master/components/animation/ -->
+    <script src="https://unpkg.com/aframe-animation-component@3.2.5/dist/aframe-animation-component.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+      body{
+          font-family: helvetica, arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        border: 0;
+      }
+
+      #custom-logo {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 120px;
+        padding: 10px;
+        z-index: 1000;
+
+      }
+      #floorplan-wrapper {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        position: absolute;
+        top: 25px;
+        right: 100px;
+        width: 250px; /* Width of the minimap. You also have to adjust the imageWidth and imageHeight variables in the Minimap script below if you want to change the size */
+        padding: 0;
+        z-index: 1000;
+
+
+      }
+      #floorplan {
+        opacity: 1;
+        position: relative;
+        width: 100%;
+        padding: 0;
+        z-index: 1000;
+
+      }
+
+       #playericon {
+         position: absolute;
+         width:25px;
+         height:25px;
+         transition-property: left, top;
+         transition-duration: 0.5s, 0.5s;
+       }
+
+      #overlay_container,#overlay_map {
+        position: fixed;
+        margin-left:-25%;
+        width: 50%;
+        height: 80vh;
+        top: 10vh;
+        left: 50%;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1;
+        cursor: pointer;
+      }
+
+       .overlay_text{
+        height:100%;
+        overflow-y:scroll;
+        font-size: 1em;
+        color: white;
+        padding-top: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+
+      }
+      .hidden{
+        display:none !important;
+      }
+
+      .overlay_text h1{
+        color: white;
+      }
+
+      .overlay_text img{
+        width: 100%;
+      }
+
+      /* 2D Menu */
+
+      /* Camera Bookmarks Buttons */
+      nav {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        z-index: 100;
+      }
+      nav > button {
+        background: rgba(255,255,255,0.9);
+        box-sizing: border-box;
+        display: block;
+        border-radius: 3px;
+        font-size: 14px;
+        color: #333;
+        height: 30px;
+        box-shadow: 1px 1px 2px rgba(0,0,0,.1);
+        transition: all ease 0.3s;
+        cursor: pointer;
+        margin: 0 5px 5px 0;
+        padding: 0 10px;
+        text-decoration: none;
+        border: none;
+        outline: none;
+      }
+      nav > button:hover {
+        background: rgba(255,255,255,1);
+
+      }
+
+      /* The side navigation menu */
+      .sidenav {
+          height: 100%; /* 100% Full-height */
+          width: 0; /* 0 width - change this with JavaScript */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Stay on top */
+          top: 0;
+          right: 0;
+          background-color: black;; /* white*/
+          overflow-x: hidden; /* Disable horizontal scroll */
+          padding-top: 60px; /* Place content 60px from the top */
+          transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      }
+
+      /* The navigation menu links */
+      .sidenav a {
+          padding: 8px 8px 8px 20px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #818181;
+          display: block;
+          transition: 0.3s
+      }
+
+      /* When you mouse over the navigation links, change their color */
+      .sidenav a:hover, .offcanvas a:focus{
+          color: #f1f1f1;
+      }
+
+      /* Position and style the close button (top left corner) */
+      .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+          margin-left: 50px;
+      }
+
+
+      /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+      @media screen and (max-width: 450px) {
+          .sidenav {padding-top: 50px;}
+          .sidenav a {font-size: 18px;}
+          #floorplan-wrapper {
+            display: none;
+          }
+
+
+      }
+
+      @media screen and (max-width: 600px) {
+       #overlay_container {
+          width: calc(100% - 80px);
+          left: 0;
+          margin-left: 0;
+        }
+        #custom-logo {
+          width: 50px;
+        }
+      }
+      /* Hamburger Menu*/
+
+      .bar1, .bar2, .bar3 {
+          width: 35px;
+          height: 5px;
+          background-color: #FFFFFF;
+          margin: 6px 0;
+          transition: 0.4s;
+      }
+
+
+      .container {
+          position: absolute;
+          top: 10px;
+          right: 25px;
+          display: inline-block;
+          cursor: pointer;
+          z-index: 1;
+
+      }
+
+      .nav_images{
+          position: relative;
+          width: 30px;
+          padding-right: 5%;
+
+      }
+
+    </style>
+</head>
+
+<body>
+
+<!-- CONTAINER WITH THE HTML CODE FOR THE "ABOUT" OVERLAY.
+     THIS OVERLAY CAN BE OPENED BY CLICKING ON THE ABOUT BUTTON IN THE SIDENAVIGATION MENU-->
+<div id="overlay_container" class="overlay">
+    <div class="overlay_text">
+        <h1>SKYLINE APARTMENTS</h1>
+        Skyline Real-Estates provides a hub for contemporary living. It’s the perfect address for those seeking a modern, luxury, high-rise residence in a thriving metropolitan community. Skyline Real-Estates is now leasing sophisticated studio, one, and two-bedroom homes, as well as two-bedroom homes with dens. The 42nd Street Boulevard is downtown Central Citys most dynamic business destination, with St. Mary Medical Center, Green Avenue, Liberty Park - and a myriad of entertainment, shopping and sporting destinations - just a short ride away.
+        <br>
+        <br>
+        <img src="https://c1.staticflickr.com/7/6191/6120311816_8e74f8866a_b.jpg">
+    </div>
+</div>
+
+<!-- CONTAINER WITH THE IFRAME CODE FOR THE "LOCATION" OVERLAY.
+ THIS OVERLAY CAN BE OPENED BY CLICKING ON THE LOCATION BUTTON IN THE SIDENAVIGATION MENU-->
+
+<div id="overlay_map" class="overlay">
+    <div class="overlay_text">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d86456.5968124816!2d8.466675692996878!3d47.377433669357664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900b9749bea219%3A0xe66e8df1e71fdc03!2zWsO8cmljaA!5e0!3m2!1sen!2sch!4v1504788246931" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<!-- SIDENAVIGATION MENU-->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times</a>
+
+    <!-- SIDENAVIGATION MENU BUTTONS -->
+    <a href="#"> <img class="nav_images" data-show="overlay_container" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FInfo.png?1504798909259"> </a>
+    <a href="#"> <img class="nav_images" data-show="floorplan-wrapper" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FFloorplan.png?1504798909211"></a>
+    <a href="https://stackoverflow.com/questions/tagged/aframe%20and%203d.io%20or%20archilogic" target="_blank"> <img class="nav_images" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FHelp.png?1504798909066"></a>
+    <a href="#"> <img class="nav_images" data-show="overlay_map" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FLocation.png?1504798909046"></a>
+
+</div>
+
+<!-- HAMBURGER MENU BUTTON FOR SIDENAVIGATION -->
+<div id="menu_btn" class="container" onclick="openNav()">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+</div>
+
+
+
+<!-- ID FOR ARCHILOGIC 3D SCENE -->
+<app-3dio id="o2Jx8X" scene-id="1512c075-3abe-4bf9-8095-0a827771e4b0"></app-3dio>
+
+<!-- COMPANY LOGO -->
+<div id="custom-logo" style="width:80px">
+    <a href="https://3d.io" target="_blank">
+        <img src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FSkyline.png?1504012826356" style="width:100%; height:100%;">
+    </a>
+</div>
+
+<!-- FLOOR PLAN MINIMAP & ICON FOR CAMERA POSITION-->
+<div id="floorplan-wrapper" class="overlay">
+    <div id="floorplan">
+        <img id="map" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2Fa4457cb3-fb58-43ad-ad8e-d82fa2915817%252FFloorPlan.png?1504612602293" style="width:100%; height:100%;">
+        <img id="playericon" src="https://cdn.glitch.com/a4457cb3-fb58-43ad-ad8e-d82fa2915817%2FCameraPosition.png?1504103910984">
+    </div>
+</div>
+
+<!-- CAMERA BOOKMARKS BUTTONS -->
+<nav>
+    <button onclick="document.getElementById('camera').components.tour.goTo('Perspective')">Perspective</button>
+    <button onclick="document.getElementById('camera').components.tour.goTo('Overview')">Overview</button>
+    <button onclick="document.getElementById('camera').components.tour.goTo('LivingRoom')">Living Room</button>
+    <button onclick="document.getElementById('camera').components.tour.goTo('LivingRoom2')">Living Room 2</button>
+    <button onclick="document.getElementById('camera').components.tour.goTo('Bedroom1')">Bedroom</button>
+    <button onclick="document.getElementById('camera').components.tour.goTo('Bedroom2')">Bedroom 2</button>
+    <!--CAMERA BOOKMARKS TOUR COMPONENT SCRIPT CONTROLS IF PLAY OR PAUSE IS SHOWN IN THE BUTTON BELOW-->
+    <button id="play-pause">&#9658</button>
+</nav>
+
+<!-- A-FRAME SCENE -->
+<a-scene class="fullscreen" vr-mode-ui="enabled: false">
+
+    <a-assets>
+
+    </a-assets>
+
+    <!-- ID FOR ARCHILOGIC LIGHTMAP -->
+    <a-entity id="apartment" io3d-data3d="key:535e624259ee6b0200000484/processing/2017-08-31_12-20-51_5sLtXJ/lighting.gz.data3d.buffer; lightMapIntensity:1.2; lightMapExposure:0.6" shadow="receive:true; cast:false"></a-entity>
+
+    <!-- SKYBOX TEXTURE -->
+    <a-sky color="#E4E0E0"></a-sky>
+
+    <!-- OVERALL AMBIENT LIGHT -->
+    <a-entity light="type:ambient; color:#bbbbbb"></a-entity>
+
+    <!-- SHADOW CASTING LIGHT -->
+    <a-entity id="shadow_light" light="type:directional; color:#333; intensity:1; castShadow:true; target:#shadow_target" position="1.5 4 4">
+        <a-entity id="shadow_target" position="0 -4 0"></a-entity>
+    </a-entity>
+
+
+    <!-- CAMERA -->
+
+    <a-entity id="camera" camera="userHeight: 0" tour="autoStart: false; move: 3500" wasd-controls="acceleration:8;easing:4;" look-controls="reverseMouseDrag:true" mouse-cursor position="-11.393 9 13.9" rotation="-50 305 0">
+        <!-- Directional lights attached to the camera for some nice lighting effects -->
+        <a-entity id="spec_1" light="type:directional; color:#ffc; intensity:0.3; target:#spec_1_target" position="2 2 0">
+            <a-entity id="spec_1_target" position="-2 -2 0"></a-entity>
+        </a-entity>
+        <a-entity id="spec_2" light="type:directional; color:#cff; intensity:0.3; target:#spec_2_target" position="-2 2 0">
+            <a-entity id="spec_2_target" position="2 -2 0"></a-entity>
+        </a-entity>
+
+        <!-- each of these waypoints will be visited in the given order -->
+        <a-entity tour-waypoint="Perspective" position="-11.393 9 13.9" rotation="-50 305 0"></a-entity>
+        <a-entity tour-waypoint="Overview" position="-5 9 7" rotation="-90 270 0"></a-entity>
+        <a-entity tour-waypoint="LivingRoom" position="-8.2 1.4 8.2" rotation="0 210 0"></a-entity>
+        <a-entity tour-waypoint="LivingRoom2" position="-8.2 1.4 13.2" rotation="0 360 0"></a-entity>
+        <a-entity tour-waypoint="Bedroom1" position="-4 3.5 13" rotation="-54 245 0"></a-entity>
+        <a-entity tour-waypoint="Bedroom2" position="-6 5 2" rotation="-75 360 0"></a-entity>
+    </a-entity>
+
+</a-scene>
+
+<!-- -================================================================================================================== -->
+<!-- Script for Camera Bookmarks Tour Component to programmatically start / stop or pause / resume the tour -->
+
+<script>
+      var tour = document.querySelector('[tour]').components.tour
+
+      // when the play-pause button is clicked, the script checks if the play symbol is shown pauses the tour and shows the pause symbol and vice versa
+      document.getElementById('play-pause').addEventListener('click', function () {
+        if(this.innerHTML === "\u25ba") {
+          this.innerHTML = "<b>\u0965</b>" //pause
+          tour.playTour()
+        } else {
+          this.innerHTML = "\u25ba" //play
+          tour.pauseTour()
+        }
+
+      })
+    </script>
+
+<!-- -================================================================================================================== -->
+<!-- Script for Side Navigation Menu -->
+<script>
+      function closeNav(){
+        document.getElementById('mySidenav').style.width='0';
+        document.getElementById('menu_btn').classList.remove('hidden');
+        overlay_hideAll();
+      }
+
+      function openNav(){
+        document.getElementById('mySidenav').style.width='80px';
+        document.getElementById('menu_btn').classList.add('hidden');
+      }
+    </script>
+
+<!-- -================================================================================================================== -->
+<!-- Script for Minimap -->
+<script>
+      var cam = document.querySelector('#camera');
+      console.log(cam)
+      var pos = cam.getAttribute('position');
+      var rot = cam.getAttribute('rotation');
+      var maxPos = {x: -10.38791934327609, y: 1.6, z: 16}
+      var minPos = {x: -0.1641025731739063, y: 1.6, z: -1}
+      var xSize= -Math.abs( maxPos.x- minPos.x );
+      var zSize= Math.abs( maxPos.z - minPos.z );
+      var imageWidth=250; // has to be the same value as the width in the css for the floor plan wrapper
+      var imageHeight=157;
+      updateMap()
+
+      cam.addEventListener('componentchanged', function (evt) {
+        if (evt.detail.name !== 'position' && evt.detail.name !== 'rotation') { return; }
+        updateMap()
+      });
+
+      function updateMap() {
+        var x = (-minPos.x+parseFloat(cam.getAttribute('position').x)) / xSize;
+        var z = (-minPos.z+parseFloat(cam.getAttribute('position').z)) / zSize;
+
+        //deg
+        var playerRotation = 270-cam.getAttribute('rotation').y;
+        var css="";
+        css=css+"top:"+(x*imageHeight-12)+"px;left:"+(z*imageWidth-12)+"px;";
+        css=css+"transform:rotate("+playerRotation+"deg)";
+        document.getElementById('playericon').setAttribute("style", css);
+      }
+    </script>
+
+<!-- -================================================================================================================== -->
+<!-- Overlay -->
+<script>
+      //disable image drag and drop
+      document.querySelectorAll("#floorplan img").forEach(function(image){
+        image.ondragstart=function(){return false;}
+      });
+
+      document.querySelector("a-scene").addEventListener('click', function (evt) {
+        overlay_hideTexts();
+      });
+
+      function overlay_hideTexts() {
+        document.querySelectorAll("#overlay_container,#overlay_map").forEach(function(overlay){
+          overlay.classList.add('hidden');
+        });
+      }
+
+      function overlay_hideAll() {
+        document.querySelectorAll(".overlay").forEach(function(overlay){
+          overlay.classList.add('hidden');
+        });
+      }
+
+
+      //hide overlays at beginning
+      overlay_hideAll();
+
+
+      //overlay menu
+      document.querySelectorAll(".nav_images").forEach(function(el){
+        el.onclick=function(evt){
+          var overlaytoshow=document.getElementById(el.getAttribute("data-show"));
+
+          document.querySelectorAll(".overlay").forEach(function(overlay){
+            if (overlaytoshow == overlay) {
+              return;
+            }
+            var classList = overlay.classList;
+            if ( ! classList.contains("hidden")) {
+              classList.add("hidden");
+            }
+          });
+
+
+          var overlaytoshow=document.getElementById(el.getAttribute("data-show"));
+          if (! overlaytoshow) {
+            return
+          }
+          var classList = overlaytoshow.classList;
+          if (classList.contains("hidden")) {
+            classList.remove("hidden");
+          } else {
+            overlaytoshow.classList.add("hidden");
+          }
+        };
+      });
+    </script>
+
+</body>
+
+</html>
