@@ -11,6 +11,24 @@
         <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\pre-dexed\debug\classes_d15c3458928dd54eca106a2a12079ec15c5b91b2.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_66b62eaccf65e775b0e5509151506836c08dcb7f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9a7d5c1e9f69cb0c67285799e8c7cb284732501a">
+        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ada0254f34cc5604f0b56e4e8f4484f9238bd562\classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="C:\Users\sedani.ab\.android\build-cache\1e2fc8ed81d4a9cdc542e5cdb782ee24446730c6\output\jars\libs\arcore_client.jar"
         jumboMode="false"

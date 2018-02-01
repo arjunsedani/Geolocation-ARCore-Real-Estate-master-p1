@@ -48,6 +48,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import javax.vecmath.Vector3f;
 
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -156,30 +157,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);
             MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
             mMarkerList.add(marker2);
-
-       /* Call<List<MarkerInfo>> call = mMarkerApi.getMarkers();
-        call.enqueue(new Callback<List<MarkerInfo>>() {
-            @Override
-            public void onResponse(Call<List<MarkerInfo>> call, Response<List<MarkerInfo>> response) {
-                mMarkerList.addAll(response.body());
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<MarkerInfo>> call, Throwable t) {
-              *//*  MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);
-                MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
-                mMarkerList.add(marker1);
-                MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);
-                MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
-                mMarkerList.add(marker2);*//*
-            }
-
-
-        });*/
-
-
     }
 
     @Override
@@ -249,7 +226,14 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             for (int i = 0; i < mMarkerList.size(); i++) {
 
                 MarkerInfo marker = mMarkerList.get(i);
-                bearing = mLocation.bearingTo(marker.getLocation());
+
+                try {
+                    bearing = mLocation.bearingTo(marker.getLocation());
+                }
+                catch (NullPointerException exception)
+                {
+                    bearing = 170;
+                }
                 azimuth = (float) Math.toDegrees(orientationValues[0]);
                 pitch = (float) Math.toDegrees(orientationValues[1]);
 
