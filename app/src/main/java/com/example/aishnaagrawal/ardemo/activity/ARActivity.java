@@ -48,9 +48,9 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import javax.vecmath.Vector3f;
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
+
+
 
 public class ARActivity extends AppCompatActivity implements GLSurfaceView.Renderer, SensorEventListener, LocationListener {
 
@@ -83,7 +83,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     /*private static MarkerApi mMarkerApi;*/
     private String mBaseUrl = "http://139.59.30.117:3000/listings/";
-    private Retrofit mRetrofit;
+    /*private Retrofit mRetrofit;*/
 
     private List<MarkerInfo> mMarkerList;
     private Frame mFrame;
