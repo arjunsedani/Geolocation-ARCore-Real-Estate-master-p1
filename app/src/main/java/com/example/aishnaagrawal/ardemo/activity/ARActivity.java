@@ -14,11 +14,13 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Range;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -157,6 +159,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);
             MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
             mMarkerList.add(marker2);
+        initNavigationDrawer1();
     }
 
     @Override
@@ -570,6 +573,34 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             this.virtualObject = virtualObject;
         }
 
+    }
+    public void initNavigationDrawer1() {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+
+                switch (id) {
+                    case R.id.nav_first_fragment:
+                        Intent startActivityIntent = new Intent(ARActivity.this, MyLocation.class);
+                        startActivity(startActivityIntent);
+                        ARActivity.this.finish();
+                        break;
+                    case R.id.nav_second_fragment:
+                        //same logic
+                        break;
+                    case R.id.nav_third_fragment:
+                        //same logic
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
 
