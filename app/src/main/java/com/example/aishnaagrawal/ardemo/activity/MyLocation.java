@@ -8,24 +8,18 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,13 +43,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.example.aishnaagrawal.ardemo.R.drawable.ic_add_location_black_24dp;
+
 
 public class MyLocation extends AppCompatActivity implements com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback{
+
 
     private static final LatLng RAJKOT = new LatLng(22.3039, 70.8022);
     private static final LatLng BANGALORE = new LatLng(12.9716, 77.5946);
     private static LatLng srcltglng;
     private static LatLng destltglng;
+    public  double latt,lngg;
+
 
     /*public static final String TAG = MapsActivity.class.getSimpleName();*/
 
@@ -141,7 +140,9 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         /*Log.d(TAG, location.toString());*/
 
         double currentLatitude = location.getLatitude();
+        latt=currentLatitude;
         double currentLongitude = location.getLongitude();
+        lngg=currentLongitude;
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
         srcltglng = latLng;
         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.arjun))
@@ -171,6 +172,12 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+       /* if(this.mMap != null)
+        {
+            this.mMap.addMarker(new MarkerOptions().position(destinationLatLng)
+                    .title("PAF-KIET"));
+        }*/
         //RAJKOT TO MY LOCATION ANIMATION
         /*LatLng rajkot = new LatLng(22.3039, 70.8022);
         //LatLng rajkot = new LatLng(22.3039, 70.8022);
@@ -179,6 +186,8 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+//arjun
+        addMarkers2Map();
         mMap.setMyLocationEnabled(true);
     }
 
@@ -316,6 +325,8 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 switch (id) {
                     case R.id.nav_first_fragment:
                         Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
+                        startActivityIntent.putExtra("LT", latt);
+                        startActivityIntent.putExtra("LN", lngg);
                         startActivity(startActivityIntent);
                         MyLocation.this.finish();
                         break;
@@ -331,6 +342,104 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 return true;
             }
         });
+    }
+
+//filter marker
+List<Marker> busesList = new ArrayList<>();
+    List<Marker> trainsList = new ArrayList<>();
+public void addMarkers2Map (){
+
+    // Markers locations
+    LatLng sydney = new LatLng(-34, 151);
+    LatLng katoomba = new LatLng(-33.717901, 150.312149);
+    LatLng portland = new LatLng(-38.311725, 141.585761);
+    LatLng adelaide = new LatLng(-34.928401, 138.605669);
+    LatLng perth = new LatLng(-31.951340, 115.857019);
+    LatLng campbell = new LatLng(-34.072022, 150.806118);
+    LatLng albany = new LatLng(-34.977138, 117.884153);
+
+
+    busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
+    busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
+    trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
+    trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
+    trainsList.add(mMap.addMarker(new MarkerOptions().position(portland).title("Marker in Portland").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Portland")));
+    trainsList.add(mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Adelaide")));
+    trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));
+}
+
+    AlertDialog dialog;
+    CheckBox buses, trains;
+
+    public void filterTheMarkers(View view) {
+
+        if (dialog == null) {
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = this.getLayoutInflater();
+            View checkBoxView = inflater.inflate(R.layout.marker_selection, null);
+
+            builder.setView(checkBoxView);
+            buses = (CheckBox) checkBoxView.findViewById(R.id.checkBox1);
+            trains = (CheckBox) checkBoxView.findViewById(R.id.checkBox2);
+            Button okButton = (Button) checkBoxView.findViewById(R.id.okButton);
+            Button cancelButton = (Button) checkBoxView.findViewById(R.id.cancelButton);
+            dialog = builder.create();
+        }
+        dialog.show();
+
+
+    }
+
+
+
+    public void displaySelectedMarkers(View view) {
+
+        dialog.dismiss();
+        Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
+        //according these check boxes status execute your code to show/hide markers
+        if (trains.isChecked() && buses.isChecked()) {
+            //show all markers
+            for (Marker marker : trainsList){
+                marker.setVisible(true);
+            }
+            for (Marker marker : busesList){
+                marker.setVisible(true);
+            }
+        } else if (trains.isChecked() && !buses.isChecked()) {
+            //show trains and hide buses markers
+            //if (view.getId() == R.id.checkBox1){
+            for (Marker marker : trainsList){
+                marker.setVisible(true);
+            }
+            for (Marker marker : busesList){
+                marker.setVisible(false);
+            }
+            //}
+        } else if (!trains.isChecked() && buses.isChecked()) {
+            //hide trains and show buses markers
+            //if (view.getId() == R.id.checkBox2){
+            for (Marker marker : busesList){
+                marker.setVisible(true);
+            }
+            for (Marker marker : trainsList){
+                marker.setVisible(false);
+            }
+            //}
+        }
+
+        else {
+            for (Marker marker : busesList){
+                marker.setVisible(false);
+            }
+            for (Marker marker : trainsList){
+                marker.setVisible(false);
+            }
+        }
+    }
+
+    public void doNothing(View view) {
+        dialog.dismiss();
     }
 
 }

@@ -96,6 +96,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     Pose mPose = new Pose(translation, rotation);
 
+    private double ltt,lnn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,12 +152,17 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mMarkerApi = mRetrofit.create(MarkerApi.class);*/
-
+        Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
+        ltt = bundle.getDouble("LT");
+        lnn = bundle.getDouble("LN");
             mMarkerList = new ArrayList<>();
-            MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);
+            /*MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);*/
+        MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
             MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
             mMarkerList.add(marker1);
-            MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);
+         /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
+        MarkerLocation markerLocation1 = new MarkerLocation(""+ltt, ""+ (lnn+0.02000));
             MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
             mMarkerList.add(marker2);
         initNavigationDrawer1();
@@ -235,7 +241,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 }
                 catch (NullPointerException exception)
                 {
-                    bearing = 170;
+                    bearing = 100;
                 }
                 azimuth = (float) Math.toDegrees(orientationValues[0]);
                 pitch = (float) Math.toDegrees(orientationValues[1]);

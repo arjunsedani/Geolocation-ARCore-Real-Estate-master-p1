@@ -24,7 +24,15 @@
                 android:layout_weight="4"
                 android:hint="Search Location Here" />
 
-
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icons8filter50"
+                android:id="@+id/marker_filter"
+                android:adjustViewBounds="true"
+                style="?android:attr/borderlessButtonStyle"
+                android:onClick="filterTheMarkers"
+                android:contentDescription="TODO" />
             <Button
                 android:id="@+id/search_button"
                 android:layout_width="wrap_content"
@@ -42,6 +50,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="com.example.aishnaagrawal.ardemo.activity.MyLocation" />
+       <!-- <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="sadsa"
+            android:id="@+id/marker_filter"
+            android:adjustViewBounds="true"
+            style="?android:attr/borderlessButtonStyle"
+            android:onClick="filterTheMarkers"/>-->
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
