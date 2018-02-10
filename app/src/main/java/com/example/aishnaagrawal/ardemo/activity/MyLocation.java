@@ -10,6 +10,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -78,7 +80,36 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
         mLocationProvider = new com.example.aishnaagrawal.ardemo.activity.LocationProvider(this, this);
 
-        initNavigationDrawer();
+        /*initNavigationDrawer();*/
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_favorites:
+                                Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
+                                startActivityIntent.putExtra("LT", latt);
+                                startActivityIntent.putExtra("LN", lngg);
+                                startActivity(startActivityIntent);
+                                MyLocation.this.finish();
+                                break;
+                            case R.id.action_schedules:
+                                Intent startActivityIntent1 = new Intent(MyLocation.this, ARActivity.class);
+                                startActivity(startActivityIntent1);
+                                MyLocation.this.finish();
+                                break;
+                            case R.id.action_music:
+                                Intent startActivityIntent2 = new Intent(MyLocation.this, ARActivity.class);
+                                startActivity(startActivityIntent2);
+                                MyLocation.this.finish();
+                                break;
+                        }
+                        return false;
+                    }
+                });
 
 
 
@@ -146,7 +177,30 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
         srcltglng = latLng;
         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.arjun))
-        MarkerOptions options = new MarkerOptions()
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng)
+                .title("Snowqualmie Falls")
+                .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
+                .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
+
+        InfoWindowData info = new InfoWindowData();
+        info.setImage("snowqualmie");
+        info.setHotel("Hotel : excellent hotels available");
+        info.setFood("Food : all types of restaurants available");
+        info.setTransport("Reach the site by bus, car and train.");
+
+        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
+
+        Marker m = mMap.addMarker(markerOptions);
+        m.setTag(info);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+        mMap.setTrafficEnabled(true);
+        settings.setZoomControlsEnabled(true);
+        settings.setCompassEnabled(true);
+        mMap.setOnInfoWindowClickListener(this);
+        /*m.showInfoWindow();*/
+     /*   MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .title("I am here!")
                 .snippet(String.valueOf(latLng))
@@ -160,38 +214,33 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         mMap.setTrafficEnabled(true);
         settings.setZoomControlsEnabled(true);
         settings.setCompassEnabled(true);
-        mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);*/
     }
-
+//1111
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();
+      /*  Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
+        startActivity(startActivityIntent);*/
+       /* Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();*/
+        /*infoWindowClick();*/
+        openVirtual();
+
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-       /* if(this.mMap != null)
-        {
-            this.mMap.addMarker(new MarkerOptions().position(destinationLatLng)
-                    .title("PAF-KIET"));
-        }*/
-        //RAJKOT TO MY LOCATION ANIMATION
-        /*LatLng rajkot = new LatLng(22.3039, 70.8022);
-        //LatLng rajkot = new LatLng(22.3039, 70.8022);
-        mMap.addMarker(new MarkerOptions().position(rajkot).title("Arjun in Rajkot"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(rajkot));*/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-//arjun
+        //to add list of markers
         addMarkers2Map();
         mMap.setMyLocationEnabled(true);
     }
 
-    public void onMapSearchmylocation(View view) {
+  /*  public void onMapSearchmylocation(View view) {
         UiSettings settings = mMap.getUiSettings();
         EditText locationSearch = (EditText) findViewById(R.id.editText);
         String location = locationSearch.getText().toString();
@@ -216,7 +265,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                     .title("I am here!")
                     .snippet(String.valueOf(latLng))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
             //.icon(vectorToBitmap(R.drawable.arjun, Color.parseColor("#A4C639")));
 
             mMap.addMarker(options);
@@ -227,7 +275,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
             settings.setCompassEnabled(true);
             mMap.setOnInfoWindowClickListener(this);
         }
-    }
+    }*/
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
         // Origin of route
@@ -313,7 +361,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         }
     }
 
-    public void initNavigationDrawer() {
+   /* public void initNavigationDrawer() {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -342,7 +390,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 return true;
             }
         });
-    }
+    }*/
 
 //filter marker
 List<Marker> busesList = new ArrayList<>();
@@ -357,9 +405,29 @@ public void addMarkers2Map (){
     LatLng perth = new LatLng(-31.951340, 115.857019);
     LatLng campbell = new LatLng(-34.072022, 150.806118);
     LatLng albany = new LatLng(-34.977138, 117.884153);
+//temp
+    MarkerOptions markerOptions = new MarkerOptions();
+    markerOptions.position(sydney)
+            .title("Snowqualmie Falls")
+            .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
+            .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
 
+    InfoWindowData info = new InfoWindowData();
+    info.setImage("snowqualmie");
+    info.setHotel("Hotel : excellent hotels available");
+    info.setFood("Food : all types of restaurants available");
+    info.setTransport("Reach the site by bus, car and train.");
 
-    busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
+    CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
+    mMap.setInfoWindowAdapter(customInfoWindow);
+
+    Marker m1 = mMap.addMarker(markerOptions);
+    busesList.add(m1);
+    m1.setTag(info);
+    mMap.setOnInfoWindowClickListener(this);
+
+   // busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
+
     busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
     trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
     trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
@@ -368,7 +436,7 @@ public void addMarkers2Map (){
     trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));
 }
 
-    AlertDialog dialog;
+    AlertDialog dialog,dialog1;
     CheckBox buses, trains;
 
     public void filterTheMarkers(View view) {
@@ -390,6 +458,8 @@ public void addMarkers2Map (){
 
 
     }
+
+
 
 
 
@@ -440,6 +510,19 @@ public void addMarkers2Map (){
 
     public void doNothing(View view) {
         dialog.dismiss();
+
+    }
+    public void doNothing1(View view) {
+        dialog1.dismiss();
+
+    }
+
+
+    public void openVirtual() {
+
+        Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
+        startActivity(startActivityIntent);
+
     }
 
 }

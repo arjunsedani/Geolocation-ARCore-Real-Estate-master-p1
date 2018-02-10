@@ -14,6 +14,8 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -165,7 +167,32 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         MarkerLocation markerLocation1 = new MarkerLocation(""+ltt, ""+ (lnn+0.02000));
             MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
             mMarkerList.add(marker2);
-        initNavigationDrawer1();
+        /*initNavigationDrawer1();*/
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation1);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_favorites:
+                                Intent startActivityIntent = new Intent(ARActivity.this, MyLocation.class);
+                                startActivity(startActivityIntent);
+                                ARActivity.this.finish();
+                                break;
+                            case R.id.action_schedules:
+                                break;
+                            case R.id.action_music:
+                              /*  Intent startActivityIntent2 = new Intent(MyLocation.this, ARActivity.class);
+                                startActivity(startActivityIntent2);
+                                MyLocation.this.finish();*/
+                                break;
+                        }
+                        return false;
+                    }
+                });
     }
 
     @Override
@@ -580,7 +607,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         }
 
     }
-    public void initNavigationDrawer1() {
+  /*  public void initNavigationDrawer1() {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -607,7 +634,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 return true;
             }
         });
-    }
+    }*/
 
 
 }
