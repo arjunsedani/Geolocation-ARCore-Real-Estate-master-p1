@@ -41,7 +41,10 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".activity.MyLocation" />
-        <activity android:name=".activity.BrowserActivity"/>
+        <activity android:name=".activity.BrowserActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

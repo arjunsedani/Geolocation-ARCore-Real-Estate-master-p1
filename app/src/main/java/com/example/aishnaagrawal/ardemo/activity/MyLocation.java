@@ -45,8 +45,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.aishnaagrawal.ardemo.R.drawable.ic_add_location_black_24dp;
-
 
 public class MyLocation extends AppCompatActivity implements com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
 
@@ -90,14 +88,14 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_favorites:
-                                Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
-                                startActivityIntent.putExtra("LT", latt);
-                                startActivityIntent.putExtra("LN", lngg);
+                              /*  Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
                                 startActivity(startActivityIntent);
-                                MyLocation.this.finish();
+                                MyLocation.this.finish();*/
                                 break;
                             case R.id.action_schedules:
                                 Intent startActivityIntent1 = new Intent(MyLocation.this, ARActivity.class);
+                                startActivityIntent1.putExtra("LT", latt);
+                                startActivityIntent1.putExtra("LN", lngg);
                                 startActivity(startActivityIntent1);
                                 MyLocation.this.finish();
                                 break;
@@ -183,7 +181,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
         InfoWindowData info = new InfoWindowData();
-        info.setImage("snowqualmie");
+        info.setImage("property1");
         info.setHotel("Hotel : excellent hotels available");
         info.setFood("Food : all types of restaurants available");
         info.setTransport("Reach the site by bus, car and train.");
@@ -399,42 +397,61 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     public void addMarkers2Map() {
 
         // Markers locations
-        LatLng sydney = new LatLng(-34, 151);
-        LatLng katoomba = new LatLng(-33.717901, 150.312149);
+        LatLng hsr = new LatLng(12.927618, 77.643575);
+        LatLng mysore = new LatLng(12.946614, 77.529841);
         LatLng portland = new LatLng(-38.311725, 141.585761);
         LatLng adelaide = new LatLng(-34.928401, 138.605669);
         LatLng perth = new LatLng(-31.951340, 115.857019);
         LatLng campbell = new LatLng(-34.072022, 150.806118);
         LatLng albany = new LatLng(-34.977138, 117.884153);
 //temp
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(sydney)
-                .title("Snowqualmie Falls")
+        MarkerOptions markerhsr = new MarkerOptions();
+        markerhsr.position(hsr)
+                .title("hsr")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
-        InfoWindowData info = new InfoWindowData();
-        info.setImage("snowqualmie");
-        info.setHotel("Hotel : excellent hotels available");
-        info.setFood("Food : all types of restaurants available");
-        info.setTransport("Reach the site by bus, car and train.");
+        InfoWindowData infohsr = new InfoWindowData();
+        infohsr.setImage("property1");
+        infohsr.setHotel("Hotel : excellent hotels available");
+        infohsr.setFood("Food : all types of restaurants available");
+        infohsr.setTransport("Reach the site by bus, car and train.");
 
-        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
-
-        Marker m1 = mMap.addMarker(markerOptions);
+        CustomInfoWindowGoogleMap customInfoWindowhsr = new CustomInfoWindowGoogleMap(this);
+        mMap.setInfoWindowAdapter(customInfoWindowhsr);
+        Marker m1 = mMap.addMarker(markerhsr);
         busesList.add(m1);
-        m1.setTag(info);
+        m1.setTag(infohsr);
+//maker mysore
+        MarkerOptions markermysore = new MarkerOptions();
+        markermysore.position(mysore)
+                .title("mysore")
+                .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+
+        InfoWindowData infomysore = new InfoWindowData();
+        infomysore.setImage("property1");
+        infomysore.setHotel("Hotel : excellent hotels available");
+        infomysore.setFood("Food : all types of restaurants available");
+        infomysore.setTransport("Reach the site by bus, car and train.");
+
+        CustomInfoWindowGoogleMap customInfoWindowmysore = new CustomInfoWindowGoogleMap(this);
+        mMap.setInfoWindowAdapter(customInfoWindowmysore);
+        Marker m2 = mMap.addMarker(markermysore);
+        trainsList.add(m2);
+        m2.setTag(infohsr);
+
         mMap.setOnInfoWindowClickListener(this);
 
         // busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
 
-        busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
+       /* busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
         trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
         trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
         trainsList.add(mMap.addMarker(new MarkerOptions().position(portland).title("Marker in Portland").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Portland")));
         trainsList.add(mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Adelaide")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));*/
+        /*mMap.setOnInfoWindowClickListener(this);*/
     }
 
     AlertDialog dialog, dialog1;

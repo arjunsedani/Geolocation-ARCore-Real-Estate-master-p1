@@ -49,6 +49,7 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
                 "drawable", context.getPackageName());
         img.setImageResource(imageId);
 
+
         hotel_tv.setText(infoWindowData.getHotel());
         food_tv.setText(infoWindowData.getFood());
         transport_tv.setText(infoWindowData.getTransport());

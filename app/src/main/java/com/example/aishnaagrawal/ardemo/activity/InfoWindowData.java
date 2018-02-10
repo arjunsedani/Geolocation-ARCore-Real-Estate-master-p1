@@ -1,5 +1,7 @@
 package com.example.aishnaagrawal.ardemo.activity;
 
+import android.widget.ImageView;
+
 /**
  * Created by sedani.ab on 2/9/2018.
  */
@@ -9,6 +11,7 @@ public class InfoWindowData {
     private String hotel;
     private String food;
     private String transport;
+
 
     public String getImage() {
         return image;
@@ -41,4 +44,9 @@ public class InfoWindowData {
     public void setTransport(String transport) {
         this.transport = transport;
     }
+
+    public void setImage(int evry_logo) {
+    }
+
+
 }

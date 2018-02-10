@@ -92,7 +92,7 @@ public class BrowserActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(BrowserActivity.this, ARActivity.class));
+        startActivity(new Intent(BrowserActivity.this, MyLocation.class));
     }
 
 
