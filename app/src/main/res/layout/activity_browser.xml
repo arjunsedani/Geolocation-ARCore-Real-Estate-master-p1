@@ -7,7 +7,6 @@
     tools:context=".activity.BrowserActivity">
 
 
-
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
@@ -17,15 +16,15 @@
         android:layout_alignParentStart="true" />
 
 
-   <!-- <ImageView
-        android:id="@+id/btnOk"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/arrowdowndropcircle"
-        android:layout_centerInParent="true" />-->
+    <!-- <ImageView
+         android:id="@+id/btnOk"
+         android:layout_width="wrap_content"
+         android:layout_height="40dp"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_gravity="center_horizontal"
+         android:src="@drawable/arrowdowndropcircle"
+         android:layout_centerInParent="true" />-->
 
 
 </RelativeLayout>

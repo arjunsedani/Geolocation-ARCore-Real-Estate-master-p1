@@ -3,6 +3,7 @@ package com.example.aishnaagrawal.ardemo.activity;
 /**
  * Created by sedani.ab on 2/9/2018.
  */
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -17,7 +18,7 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
 
-    public CustomInfoWindowGoogleMap(Context ctx){
+    public CustomInfoWindowGoogleMap(Context ctx) {
         context = ctx;
     }
 
@@ -28,7 +29,7 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
-        View view = ((Activity)context).getLayoutInflater()
+        View view = ((Activity) context).getLayoutInflater()
                 .inflate(R.layout.map_custom_infowindow, null);
 
         TextView name_tv = (TextView) view.findViewById(R.id.name);

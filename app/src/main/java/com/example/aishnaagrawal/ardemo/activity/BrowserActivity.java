@@ -16,7 +16,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 
-
 import com.example.aishnaagrawal.ardemo.R;
 
 
@@ -26,7 +25,8 @@ import com.example.aishnaagrawal.ardemo.R;
 
 public class BrowserActivity extends AppCompatActivity {
 
-    private String str1,str2,str3,str4,str5;
+    private String str1, str2, str3, str4, str5;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class BrowserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
 
-        WebView htmlWebView = (WebView)findViewById(R.id.webView);
+        WebView htmlWebView = (WebView) findViewById(R.id.webView);
         htmlWebView.setWebViewClient(new CustomWebViewClient());
         //arjun
         WebSettings webSetting = htmlWebView.getSettings();
@@ -65,9 +65,6 @@ public class BrowserActivity extends AppCompatActivity {
     }
 
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -82,7 +79,6 @@ public class BrowserActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     private class CustomWebViewClient extends WebViewClient {

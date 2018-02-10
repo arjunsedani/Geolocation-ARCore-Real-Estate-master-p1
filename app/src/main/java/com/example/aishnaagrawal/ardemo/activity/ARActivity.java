@@ -53,9 +53,6 @@ import javax.microedition.khronos.opengles.GL10;
 import javax.vecmath.Vector3f;
 
 
-
-
-
 public class ARActivity extends AppCompatActivity implements GLSurfaceView.Renderer, SensorEventListener, LocationListener {
 
     private static final String TAG = ARActivity.class.getSimpleName();
@@ -98,7 +95,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     Pose mPose = new Pose(translation, rotation);
 
-    private double ltt,lnn;
+    private double ltt, lnn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,19 +151,19 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mMarkerApi = mRetrofit.create(MarkerApi.class);*/
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         ltt = bundle.getDouble("LT");
         lnn = bundle.getDouble("LN");
-            mMarkerList = new ArrayList<>();
+        mMarkerList = new ArrayList<>();
             /*MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);*/
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
-            MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
-            mMarkerList.add(marker1);
+        MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
+        mMarkerList.add(marker1);
          /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
-        MarkerLocation markerLocation1 = new MarkerLocation(""+ltt, ""+ (lnn+0.02000));
-            MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
-            mMarkerList.add(marker2);
+        MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
+        MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
+        mMarkerList.add(marker2);
         /*initNavigationDrawer1();*/
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
@@ -265,9 +262,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
                 try {
                     bearing = mLocation.bearingTo(marker.getLocation());
-                }
-                catch (NullPointerException exception)
-                {
+                } catch (NullPointerException exception) {
                     bearing = 100;
                 }
                 azimuth = (float) Math.toDegrees(orientationValues[0]);
@@ -521,7 +516,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private void launchbrowser() {
 
         Intent intent = new Intent(this, BrowserActivity.class);
-                // intent.putExtra("aasa",gptext);
+        // intent.putExtra("aasa",gptext);
         startActivity(intent);
     }
 

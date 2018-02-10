@@ -4,31 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.aishnaagrawal.ardemo.activity.MyLocation">
-    <LinearLayout
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map1"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@+id/map1">
-    <ImageButton
-        android:id="@+id/marker_filter"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="TODO"
-        android:onClick="filterTheMarkers"
-        android:src="@drawable/icons8filter50"
-        />
-    </LinearLayout>
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map1"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context="com.example.aishnaagrawal.ardemo.activity.MyLocation"/>
+        tools:context="com.example.aishnaagrawal.ardemo.activity.MyLocation">
 
+        <ImageButton
+            android:id="@+id/marker_filter"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="TODO"
+            android:onClick="filterTheMarkers"
+            android:src="@drawable/icons8filter50" />
+    </fragment>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -38,12 +34,12 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/bottom_navigation"
-        app:layout_constraintBottom_toBottomOf="@+id/map1"/>
-   <!-- <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view1"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/drawer" />-->
+        app:layout_constraintBottom_toBottomOf="@+id/map1"
+        app:menu="@menu/bottom_navigation" />
+    <!-- <android.support.design.widget.NavigationView
+         android:id="@+id/nav_view1"
+         android:layout_width="100dp"
+         android:layout_height="match_parent"
+         android:layout_gravity="start"
+         app:menu="@menu/drawer" />-->
 </android.support.constraint.ConstraintLayout>

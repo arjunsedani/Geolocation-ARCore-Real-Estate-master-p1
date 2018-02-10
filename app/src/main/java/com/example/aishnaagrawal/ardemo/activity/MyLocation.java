@@ -48,14 +48,14 @@ import java.util.List;
 import static com.example.aishnaagrawal.ardemo.R.drawable.ic_add_location_black_24dp;
 
 
-public class MyLocation extends AppCompatActivity implements com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback{
+public class MyLocation extends AppCompatActivity implements com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
 
 
     private static final LatLng RAJKOT = new LatLng(22.3039, 70.8022);
     private static final LatLng BANGALORE = new LatLng(12.9716, 77.5946);
     private static LatLng srcltglng;
     private static LatLng destltglng;
-    public  double latt,lngg;
+    public double latt, lngg;
 
 
     /*public static final String TAG = MapsActivity.class.getSimpleName();*/
@@ -110,7 +110,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                         return false;
                     }
                 });
-
 
 
     }
@@ -171,9 +170,9 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         /*Log.d(TAG, location.toString());*/
 
         double currentLatitude = location.getLatitude();
-        latt=currentLatitude;
+        latt = currentLatitude;
         double currentLongitude = location.getLongitude();
-        lngg=currentLongitude;
+        lngg = currentLongitude;
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
         srcltglng = latLng;
         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.arjun))
@@ -181,7 +180,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         markerOptions.position(latLng)
                 .title("Snowqualmie Falls")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-                .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
         InfoWindowData info = new InfoWindowData();
         info.setImage("snowqualmie");
@@ -216,7 +215,8 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         settings.setCompassEnabled(true);
         mMap.setOnInfoWindowClickListener(this);*/
     }
-//1111
+
+    //1111
     @Override
     public void onInfoWindowClick(Marker marker) {
       /*  Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
@@ -392,51 +392,52 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         });
     }*/
 
-//filter marker
-List<Marker> busesList = new ArrayList<>();
+    //filter marker
+    List<Marker> busesList = new ArrayList<>();
     List<Marker> trainsList = new ArrayList<>();
-public void addMarkers2Map (){
 
-    // Markers locations
-    LatLng sydney = new LatLng(-34, 151);
-    LatLng katoomba = new LatLng(-33.717901, 150.312149);
-    LatLng portland = new LatLng(-38.311725, 141.585761);
-    LatLng adelaide = new LatLng(-34.928401, 138.605669);
-    LatLng perth = new LatLng(-31.951340, 115.857019);
-    LatLng campbell = new LatLng(-34.072022, 150.806118);
-    LatLng albany = new LatLng(-34.977138, 117.884153);
+    public void addMarkers2Map() {
+
+        // Markers locations
+        LatLng sydney = new LatLng(-34, 151);
+        LatLng katoomba = new LatLng(-33.717901, 150.312149);
+        LatLng portland = new LatLng(-38.311725, 141.585761);
+        LatLng adelaide = new LatLng(-34.928401, 138.605669);
+        LatLng perth = new LatLng(-31.951340, 115.857019);
+        LatLng campbell = new LatLng(-34.072022, 150.806118);
+        LatLng albany = new LatLng(-34.977138, 117.884153);
 //temp
-    MarkerOptions markerOptions = new MarkerOptions();
-    markerOptions.position(sydney)
-            .title("Snowqualmie Falls")
-            .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-            .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(sydney)
+                .title("Snowqualmie Falls")
+                .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
-    InfoWindowData info = new InfoWindowData();
-    info.setImage("snowqualmie");
-    info.setHotel("Hotel : excellent hotels available");
-    info.setFood("Food : all types of restaurants available");
-    info.setTransport("Reach the site by bus, car and train.");
+        InfoWindowData info = new InfoWindowData();
+        info.setImage("snowqualmie");
+        info.setHotel("Hotel : excellent hotels available");
+        info.setFood("Food : all types of restaurants available");
+        info.setTransport("Reach the site by bus, car and train.");
 
-    CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
-    mMap.setInfoWindowAdapter(customInfoWindow);
+        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
 
-    Marker m1 = mMap.addMarker(markerOptions);
-    busesList.add(m1);
-    m1.setTag(info);
-    mMap.setOnInfoWindowClickListener(this);
+        Marker m1 = mMap.addMarker(markerOptions);
+        busesList.add(m1);
+        m1.setTag(info);
+        mMap.setOnInfoWindowClickListener(this);
 
-   // busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
+        // busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
 
-    busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
-    trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
-    trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
-    trainsList.add(mMap.addMarker(new MarkerOptions().position(portland).title("Marker in Portland").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Portland")));
-    trainsList.add(mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Adelaide")));
-    trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));
-}
+        busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(portland).title("Marker in Portland").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Portland")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Adelaide")));
+        trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));
+    }
 
-    AlertDialog dialog,dialog1;
+    AlertDialog dialog, dialog1;
     CheckBox buses, trains;
 
     public void filterTheMarkers(View view) {
@@ -460,9 +461,6 @@ public void addMarkers2Map (){
     }
 
 
-
-
-
     public void displaySelectedMarkers(View view) {
 
         dialog.dismiss();
@@ -470,39 +468,37 @@ public void addMarkers2Map (){
         //according these check boxes status execute your code to show/hide markers
         if (trains.isChecked() && buses.isChecked()) {
             //show all markers
-            for (Marker marker : trainsList){
+            for (Marker marker : trainsList) {
                 marker.setVisible(true);
             }
-            for (Marker marker : busesList){
+            for (Marker marker : busesList) {
                 marker.setVisible(true);
             }
         } else if (trains.isChecked() && !buses.isChecked()) {
             //show trains and hide buses markers
             //if (view.getId() == R.id.checkBox1){
-            for (Marker marker : trainsList){
+            for (Marker marker : trainsList) {
                 marker.setVisible(true);
             }
-            for (Marker marker : busesList){
+            for (Marker marker : busesList) {
                 marker.setVisible(false);
             }
             //}
         } else if (!trains.isChecked() && buses.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
-            for (Marker marker : busesList){
+            for (Marker marker : busesList) {
                 marker.setVisible(true);
             }
-            for (Marker marker : trainsList){
+            for (Marker marker : trainsList) {
                 marker.setVisible(false);
             }
             //}
-        }
-
-        else {
-            for (Marker marker : busesList){
+        } else {
+            for (Marker marker : busesList) {
                 marker.setVisible(false);
             }
-            for (Marker marker : trainsList){
+            for (Marker marker : trainsList) {
                 marker.setVisible(false);
             }
         }
@@ -512,6 +508,7 @@ public void addMarkers2Map (){
         dialog.dismiss();
 
     }
+
     public void doNothing1(View view) {
         dialog1.dismiss();
 

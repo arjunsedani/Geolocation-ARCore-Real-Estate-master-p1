@@ -9,25 +9,26 @@
         android:id="@+id/surfaceview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"/>
+        android:layout_gravity="top" />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/bottom_navigation"
         app:layout_constraintBottom_toBottomOf="@+id/surfaceview"
-        android:layout_gravity="bottom|end"/>
+        app:menu="@menu/bottom_navigation" />
 
-  <!--  <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/drawer" />-->
+    <!--  <android.support.design.widget.NavigationView
+          android:id="@+id/nav_view"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:layout_gravity="start"
+          app:menu="@menu/drawer" />-->
 
 
 </android.support.constraint.ConstraintLayout>

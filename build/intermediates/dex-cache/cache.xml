@@ -16,17 +16,8 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="01e11347b3deb008b771317fcb73a25c7a8e6702">
+        sha1="7eccf926febef9d46284bbaf4cd1ebf5d89963fa">
         <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ada0254f34cc5604f0b56e4e8f4484f9238bd562\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\obj-0.2.1\obj-0.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="d2df8e6fa7ba5aae4d0f847459ddd345d550ffaa">
-        <dex dex="C:\Users\sedani.ab\androidapps\Geolocation-ARCore-Real-Estate-master\app\build\intermediates\pre-dexed\debug\obj-0.2.1_6d467fee92a1f828f43bfa337bdaa7e5f2a9e3be.jar" />
     </item>
 
 </items>
