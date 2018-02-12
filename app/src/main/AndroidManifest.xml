@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -21,6 +22,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -41,10 +43,9 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".activity.MyLocation" />
-        <activity android:name=".activity.BrowserActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".activity.BrowserActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
