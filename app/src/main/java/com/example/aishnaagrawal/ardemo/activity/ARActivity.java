@@ -63,6 +63,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private BackgroundRenderer mBackgroundRenderer = new BackgroundRenderer();
     private GestureDetector mGestureDetector;
     private ObjectRenderer mVirtualObject = new ObjectRenderer();
+    private ObjectRenderer mVirtualObject2 = new ObjectRenderer();
 
     private final float[] mAnchorMatrix = new float[16];
 
@@ -96,6 +97,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     Pose mPose = new Pose(translation, rotation);
 
     private double ltt, lnn;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,10 +163,11 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
+        //arjun
          /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
-        MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
+        /*MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
         MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
-        mMarkerList.add(marker2);
+        mMarkerList.add(marker2);*/
         /*initNavigationDrawer1();*/
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
@@ -396,8 +400,13 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
         // Prepare the other rendering objects.
         try {
-            mVirtualObject.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
+            mVirtualObject.createOnGlThread(/*context=*/this, "Castle/Castle OBJ.obj", "Castle/Castle Exterior Texture.jpg");
+            //mVirtualObject.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
+          /*  mVirtualObject.createOnGlThread(*//*context=*//*this, "sign.obj", "mchenry.jpg");*/
             mVirtualObject.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
+
+            mVirtualObject2.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
+            mVirtualObject2.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
         } catch (IOException e) {
             Log.e(TAG, "Failed to read obj file");
@@ -469,9 +478,13 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 }
 
                 Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
-
-                mVirtualObject.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.02f);
+                mVirtualObject2.updateModelMatrix(mAnchorMatrix,scaleFactor);
+                //arjun
+                /*mVirtualObject.updateModelMatrix(mAnchorMatrix, scaleFactor);*/
                 mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
+
+                mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
 
                 if (tap != null) {
                     //showToast(marker.getCategory());
