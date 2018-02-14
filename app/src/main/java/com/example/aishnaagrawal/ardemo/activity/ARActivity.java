@@ -163,6 +163,9 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
+        markerLocation = new MarkerLocation("" + (ltt+0.01), "" + (lnn+0.1));
+        marker1 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation);
+        mMarkerList.add(marker1);
         //arjun
          /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
         /*MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
@@ -478,7 +481,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 }
 
                 Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
-                mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.02f);
+                mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
                 mVirtualObject2.updateModelMatrix(mAnchorMatrix,scaleFactor);
                 //arjun
                 /*mVirtualObject.updateModelMatrix(mAnchorMatrix, scaleFactor);*/
