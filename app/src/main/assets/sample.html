@@ -10,16 +10,27 @@
     <link href="https://storage-nocdn.3d.io/app-creator-templates/default.css" rel="stylesheet">
     <script src="https://unpkg.com/aframe-animation-component@3.2.5/dist/aframe-animation-component.min.js"></script>
     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
-    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script>
+AFRAME.registerComponent('cursor-listener', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+      document.querySelector('[camera]').setAttribute('position', '2.672324724104891 1 -4.921863131484722');
+    });
+  }
+});
+</script>
 </head>
 <body>
 <!-- io3d identifier -->
 <io3d-app id="default_setup" scene-id="ecfa108b-8f1b-4ca9-804c-dadb513c1698"></io3d-app>
 <!-- ui -->
-
+<div id="custom-logo">
+    <a href="https://3d.io" target="_blank">
+        <img src="https://archilogic-com.github.io/ui-style-guide/3d-io-logo/3d-io-logo-small.svg">
+    </a>
+</div>
 <div class="camera-controls">
     <div class="waypoints">
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="89175bee-b73d-4264-9149-da75a209c08d">TOP VIEW</button>
@@ -52,42 +63,32 @@
 <!-- 3d scene -->
 <a-scene io3d-lighting="intensity:0.9">
     <a-assets>
-        <img id="city" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+        <a-mixin id="green" material="color: green"></a-mixin>
         <img id="city-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg">
         <img id="cubes-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg">
-        <img id="sechelt-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg">
-        <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="cubes" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/cubes.jpg">
-        <img id="sechelt" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
-
-        <!-- Image link template to be reused. -->
-        <script id="link" type="text/html">
-            <a-entity class="link"
-                      geometry="primitive: plane; height: 1; width: 1"
-                      material="shader: flat; src: ${thumb}"
-                      event-set__1="_event: mousedown; scale: 1 1 1"
-                      event-set__2="_event: mouseup; scale: 1.2 1.2 1"
-                      event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
-                      event-set__4="_event: mouseleave; scale: 1 1 1"
-                      set-image="on: click; target: #image-360; src: ${src}"
-                      sound="on: click; src: #click-sound"></a-entity>
-        </script>
     </a-assets>
-    <!-- Camera + cursor. -->
+    <a-entity camera="" tour="autoStart: false" wasd-controls="" look-controls="" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0">
 
-    <a-entity camera="" tour="autoStart: false" wasd-controls="" look-controls="" position="1.088591718053939 42.531370281563326 -6.681711964269908" rotation="-89 180 0">
-        <a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb" position="-0.7 0.6 -2.5"></a-entity>
-		<a-entity tour-waypoint="TOP VIEW" io3d-uuid="89175bee-b73d-4264-9149-da75a209c08d" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
-        <a-entity tour-waypoint="DINING" io3d-uuid="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8" position="1.6270672254453367 1.37 -7.456440782383291" rotation="0 534.1176470588235 0"></a-entity>
-        <a-entity tour-waypoint="KITCHEN" io3d-uuid="e51b9208-9b42-443c-9019-bdb85629acbc" position="1.6362287621724236 1.37 -7.436990424049397" rotation="0 236.2313060817547 0"></a-entity>
-        <a-entity tour-waypoint="BATH" io3d-uuid="ded31f03-3b5d-4853-92cf-c2131c503690" position="2.672324724104891 8 -4.921863131484722" rotation="-71.42572283150552 209.85212314248636 0"></a-entity>
-        <a-entity tour-waypoint="ROOM" io3d-uuid="45f9337f-d399-45db-88f4-d6649c283652" position="-2.5482829725963065 8 -7.5484415274099925" rotation="-65.55359585079536 501.42763786344364 0"></a-entity>
-        <a-entity tour-waypoint="LOUNGE" io3d-uuid="61da122b-f597-42e8-b0a2-7cd6f0ce7a5b" position="-2.1250021297212873 8 -0.8949577051582036" rotation="-72.04718961972362 496.70317855304586 0"></a-entity>
-        <a-entity tour-waypoint="BEDROOM" io3d-uuid="71d7582f-1951-4414-820d-a21659b36409" position="-2.2694999285447803 8 3.7849461379999045" rotation="-73.81854436689933 499.85515246733434 0"></a-entity>
-        <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3"
+                  material="color: cyan; shader: flat" shader: flat">
+        <a-animation begin="click" easing="ease-in" attribute="scale"
+                     fill="forwards" from="0.2 0.2 0.2" to="1 1 1" dur="150"></a-animation>
+        <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                     fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500"></a-animation>
     </a-entity>
-	<a-sky src="https://storage.3d.io/535e624259ee6b0200000484/2017-08-08_15-19-35_C6qRcB/empire_low.jpg" rotation="0 290 0"></a-sky>
-	<a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb" position="-0.7 0.6 -2.5"></a-entity>
+    <a-entity tour-waypoint="TOP VIEW" io3d-uuid="89175bee-b73d-4264-9149-da75a209c08d" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
+    <a-entity tour-waypoint="DINING" io3d-uuid="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8" position="1.6270672254453367 1.37 -7.456440782383291" rotation="0 534.1176470588235 0"></a-entity>
+    <a-entity tour-waypoint="KITCHEN" io3d-uuid="e51b9208-9b42-443c-9019-bdb85629acbc" position="1.6362287621724236 1.37 -7.436990424049397" rotation="0 236.2313060817547 0"></a-entity>
+    <a-entity tour-waypoint="BATH" io3d-uuid="ded31f03-3b5d-4853-92cf-c2131c503690" position="2.672324724104891 8 -4.921863131484722" rotation="-71.42572283150552 209.85212314248636 0"></a-entity>
+    <a-entity tour-waypoint="ROOM" io3d-uuid="45f9337f-d399-45db-88f4-d6649c283652" position="-2.5482829725963065 8 -7.5484415274099925" rotation="-65.55359585079536 501.42763786344364 0"></a-entity>
+    <a-entity tour-waypoint="LOUNGE" io3d-uuid="61da122b-f597-42e8-b0a2-7cd6f0ce7a5b" position="-2.1250021297212873 8 -0.8949577051582036" rotation="-72.04718961972362 496.70317855304586 0"></a-entity>
+    <a-entity tour-waypoint="BEDROOM" io3d-uuid="71d7582f-1951-4414-820d-a21659b36409" position="-2.2694999285447803 8 3.7849461379999045" rotation="-73.81854436689933 499.85515246733434 0"></a-entity>
+    <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
+
+    </a-entity>
+    <a-sky src="https://storage.3d.io/535e624259ee6b0200000484/2017-08-08_15-19-35_C6qRcB/empire_low.jpg" rotation="0 290 0"></a-sky>
     <a-entity class="io3d-scene" position="0 0 0" rotation="0 0 0" io3d-uuid="ecfa108b-8f1b-4ca9-804c-dadb513c1698">
         <a-entity class="io3d-level" position="0 0 0" rotation="0 0 0" io3d-uuid="a3c95f59-3d29-460c-b706-a125e6ce3f69">
             <a-entity io3d-data3d="key: 4c9f4bed-af3b-4b39-a532-0cef0f81b622/processing/2018-02-08_06-25-12_0aOJNd/lighting.gz.data3d.buffer; lightMapIntensity: 1; lightMapExposure: 0.5" shadow="cast: false; receive: true"></a-entity>
@@ -199,7 +200,10 @@
             <a-entity io3d-interior="" io3d-furniture="id: c944cef8-c4f7-48eb-9780-8bc3cc833185" shadow="cast: true; receive: false" position="-4.2382812 3.552713678800501e-15 2.3046875" rotation="0 0 0" io3d-uuid="0f1e0d46-0d6f-4d54-98c9-8c04c772f990"></a-entity>
             <a-entity io3d-interior="" io3d-furniture="id: 8b5f7079-b42b-4689-9b37-3dd2946bb651" shadow="cast: true; receive: false" position="-3.1054687 3.552713678800501e-15 0.78125" rotation="0 0 0" io3d-uuid="7ee10c71-7be1-4ab9-b770-70e573038ec6"></a-entity>
             <a-entity io3d-interior="" io3d-furniture="id: f12093e6-02d7-4a7f-9fb1-01f0073f7c5f" shadow="cast: true; receive: false" position="-4.5507812 3.552713678800501e-15 0.6835938" rotation="0 90 0" io3d-uuid="3e9a7224-0d35-4556-bb69-66a284972b33"></a-entity>
+            <!--a-entity template="src: #link" io3d-interior="material_color:antrazit; " io3d-furniture="id: cc3d2b47-a7b4-42ae-a98b-fdff4318f8af; material_color:antrazit" shadow="cast: true; receive: false" position="1.0742188 0 -6.40625" rotation="0 0 0" io3d-uuid="91353b74-cb7d-4bad-b843-95fcab01874b"></a-entity!-->
+            <a-entity id="box" position="1.0742188 0 -6.40625"  cursor-listener geometry="primitive: box" material="color: blue"></a-entity>
         </a-entity>
+    </a-entity>
     </a-entity>
 </a-scene>
 </body>
