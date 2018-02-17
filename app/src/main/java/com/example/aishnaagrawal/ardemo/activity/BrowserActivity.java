@@ -50,7 +50,7 @@ public class BrowserActivity extends AppCompatActivity {
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDisplayZoomControls(true);
 
-        htmlWebView.loadUrl("file:///android_asset/office.html");
+        htmlWebView.loadUrl("file:///android_asset/sample.html");
 
         /*GoToNewActivity = (ImageView)findViewById(R.id.btnOk);
 

@@ -16,7 +16,8 @@ AFRAME.registerComponent('cursor-listener', {
     var lastIndex = -1;
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
-      document.querySelector('[camera]').setAttribute('position', '2.672324724104891 1 -4.921863131484722');
+
+      document.querySelector('[camera]').setAttribute('position', '-2.5482829725963065 1 -7.5484415274099925');
     });
   }
 });
@@ -26,11 +27,6 @@ AFRAME.registerComponent('cursor-listener', {
 <!-- io3d identifier -->
 <io3d-app id="default_setup" scene-id="ecfa108b-8f1b-4ca9-804c-dadb513c1698"></io3d-app>
 <!-- ui -->
-<div id="custom-logo">
-    <a href="https://3d.io" target="_blank">
-        <img src="https://archilogic-com.github.io/ui-style-guide/3d-io-logo/3d-io-logo-small.svg">
-    </a>
-</div>
 <div class="camera-controls">
     <div class="waypoints">
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="89175bee-b73d-4264-9149-da75a209c08d">TOP VIEW</button>
@@ -62,13 +58,7 @@ AFRAME.registerComponent('cursor-listener', {
 </div>
 <!-- 3d scene -->
 <a-scene io3d-lighting="intensity:0.9">
-    <a-assets>
-        <a-mixin id="green" material="color: green"></a-mixin>
-        <img id="city-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg">
-        <img id="cubes-thumb" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg">
-    </a-assets>
-    <a-entity camera="" tour="autoStart: false" wasd-controls="" look-controls="" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0">
-
+    <a-entity camera="" tour="autoStart: false" wasd-controls="" look-controls="" position="-1.3610158785859348 8 1.5625046854718971" rotation="-89 180 0">
         <a-entity cursor="fuse: true; fuseTimeout: 500"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3"
@@ -86,7 +76,6 @@ AFRAME.registerComponent('cursor-listener', {
     <a-entity tour-waypoint="LOUNGE" io3d-uuid="61da122b-f597-42e8-b0a2-7cd6f0ce7a5b" position="-2.1250021297212873 8 -0.8949577051582036" rotation="-72.04718961972362 496.70317855304586 0"></a-entity>
     <a-entity tour-waypoint="BEDROOM" io3d-uuid="71d7582f-1951-4414-820d-a21659b36409" position="-2.2694999285447803 8 3.7849461379999045" rotation="-73.81854436689933 499.85515246733434 0"></a-entity>
     <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
-
     </a-entity>
     <a-sky src="https://storage.3d.io/535e624259ee6b0200000484/2017-08-08_15-19-35_C6qRcB/empire_low.jpg" rotation="0 290 0"></a-sky>
     <a-entity class="io3d-scene" position="0 0 0" rotation="0 0 0" io3d-uuid="ecfa108b-8f1b-4ca9-804c-dadb513c1698">
@@ -200,10 +189,16 @@ AFRAME.registerComponent('cursor-listener', {
             <a-entity io3d-interior="" io3d-furniture="id: c944cef8-c4f7-48eb-9780-8bc3cc833185" shadow="cast: true; receive: false" position="-4.2382812 3.552713678800501e-15 2.3046875" rotation="0 0 0" io3d-uuid="0f1e0d46-0d6f-4d54-98c9-8c04c772f990"></a-entity>
             <a-entity io3d-interior="" io3d-furniture="id: 8b5f7079-b42b-4689-9b37-3dd2946bb651" shadow="cast: true; receive: false" position="-3.1054687 3.552713678800501e-15 0.78125" rotation="0 0 0" io3d-uuid="7ee10c71-7be1-4ab9-b770-70e573038ec6"></a-entity>
             <a-entity io3d-interior="" io3d-furniture="id: f12093e6-02d7-4a7f-9fb1-01f0073f7c5f" shadow="cast: true; receive: false" position="-4.5507812 3.552713678800501e-15 0.6835938" rotation="0 90 0" io3d-uuid="3e9a7224-0d35-4556-bb69-66a284972b33"></a-entity>
-            <!--a-entity template="src: #link" io3d-interior="material_color:antrazit; " io3d-furniture="id: cc3d2b47-a7b4-42ae-a98b-fdff4318f8af; material_color:antrazit" shadow="cast: true; receive: false" position="1.0742188 0 -6.40625" rotation="0 0 0" io3d-uuid="91353b74-cb7d-4bad-b843-95fcab01874b"></a-entity!-->
-            <a-entity id="box" position="1.0742188 0 -6.40625"  cursor-listener geometry="primitive: box" material="color: blue"></a-entity>
+            <!--asa!-->
+            <a-entity id="ring" position="1.0742188 1 -5.40625"  cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity  id="ring" shadow="cast: true; receive: false" position="-0.3710937 1.5 -2.9882812" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" position="-0.5273437  1.5 -5.8007812" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" position="-3.90625  1.5 -3.2226562" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" position="-1.7773437 1.5 -16 2.4804688" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" position="1.0351563 1.5-16 0.15625" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" position="-0.2929687  1.5 2.4023438" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="ring" shadow="cast: true; receive: false" shadow="cast: true; receive: false" position="-2.1875 2.220446049250313e-16 3.8476563" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
         </a-entity>
-    </a-entity>
     </a-entity>
 </a-scene>
 </body>
