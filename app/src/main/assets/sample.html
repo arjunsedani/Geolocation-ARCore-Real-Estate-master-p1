@@ -11,13 +11,83 @@
     <script src="https://unpkg.com/aframe-animation-component@3.2.5/dist/aframe-animation-component.min.js"></script>
     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
     <script>
-AFRAME.registerComponent('cursor-listener', {
+AFRAME.registerComponent('cursor-listener-lontodining', {
   init: function () {
     var lastIndex = -1;
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
 
-      document.querySelector('[camera]').setAttribute('position', '-2.5482829725963065 1 -7.5484415274099925');
+      document.querySelector('[camera]').setAttribute('position', '1.6270672254453367 1.37 -7.456440782383291');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-dintolounge', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '-2.1250021297212873 1.37 -0.8949577051582036');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-diningtoroom', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '-2.5482829725963065 1.37 -7.5484415274099925');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-roomtolounge', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '-2.1250021297212873 1.37 -0.8949577051582036');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-lontostore', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '2.77 1.37 0.69');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-towashroom', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '2.672324724104891 1.37 -4.921863131484722');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-livetobed', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '-2.2694999285447803 1.37 3.7849461379999045');
+    });
+  }
+});
+AFRAME.registerComponent('cursor-listener-bedtolive', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function (evt) {
+
+      document.querySelector('[camera]').setAttribute('position', '-2.1250021297212873 1.37 -0.8949577051582036');
     });
   }
 });
@@ -57,25 +127,30 @@ AFRAME.registerComponent('cursor-listener', {
     </div>
 </div>
 <!-- 3d scene -->
-<a-scene io3d-lighting="intensity:0.9">
+<a-scene io3d-lighting="intensity:0.9" inspector="url: https://aframe.io/releases/0.3.0/aframe-inspector.min.js">
     <a-entity camera="" tour="autoStart: false" wasd-controls="" look-controls="" position="-1.3610158785859348 8 1.5625046854718971" rotation="-89 180 0">
+        <!--a-entity cursor="fuse: true; fuseTimeout: 500"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3"
+             material="color: cyan; shader: flat" shader: flat">
+             <a-animation begin="click" easing="ease-in" attribute="scale"
+             fill="forwards" from="0.2 0.2 0.2" to="1 1 1" dur="150"></a-animation>
+        <a-animation begin="fusing" easing="ease-in" attribute="scale"
+             fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500"></a-animation>
+  </a-entity!-->
         <a-entity cursor="fuse: true; fuseTimeout: 500"
                   position="0 0 -1"
-                  geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3"
-                  material="color: cyan; shader: flat" shader: flat">
-        <a-animation begin="click" easing="ease-in" attribute="scale"
-                     fill="forwards" from="0.2 0.2 0.2" to="1 1 1" dur="150"></a-animation>
-        <a-animation begin="fusing" easing="ease-in" attribute="scale"
-                     fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500"></a-animation>
-    </a-entity>
-    <a-entity tour-waypoint="TOP VIEW" io3d-uuid="89175bee-b73d-4264-9149-da75a209c08d" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
-    <a-entity tour-waypoint="DINING" io3d-uuid="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8" position="1.6270672254453367 1.37 -7.456440782383291" rotation="0 534.1176470588235 0"></a-entity>
-    <a-entity tour-waypoint="KITCHEN" io3d-uuid="e51b9208-9b42-443c-9019-bdb85629acbc" position="1.6362287621724236 1.37 -7.436990424049397" rotation="0 236.2313060817547 0"></a-entity>
-    <a-entity tour-waypoint="BATH" io3d-uuid="ded31f03-3b5d-4853-92cf-c2131c503690" position="2.672324724104891 8 -4.921863131484722" rotation="-71.42572283150552 209.85212314248636 0"></a-entity>
-    <a-entity tour-waypoint="ROOM" io3d-uuid="45f9337f-d399-45db-88f4-d6649c283652" position="-2.5482829725963065 8 -7.5484415274099925" rotation="-65.55359585079536 501.42763786344364 0"></a-entity>
-    <a-entity tour-waypoint="LOUNGE" io3d-uuid="61da122b-f597-42e8-b0a2-7cd6f0ce7a5b" position="-2.1250021297212873 8 -0.8949577051582036" rotation="-72.04718961972362 496.70317855304586 0"></a-entity>
-    <a-entity tour-waypoint="BEDROOM" io3d-uuid="71d7582f-1951-4414-820d-a21659b36409" position="-2.2694999285447803 8 3.7849461379999045" rotation="-73.81854436689933 499.85515246733434 0"></a-entity>
-    <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                  material="color: black; shader: flat">
+        </a-entity>
+        <a-entity tour-waypoint="TOP VIEW" io3d-uuid="89175bee-b73d-4264-9149-da75a209c08d" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
+        <a-entity tour-waypoint="DINING" io3d-uuid="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8" position="1.6270672254453367 1.37 -7.456440782383291" rotation="0 534.1176470588235 0"></a-entity>
+        <a-entity tour-waypoint="KITCHEN" io3d-uuid="e51b9208-9b42-443c-9019-bdb85629acbc" position="1.6362287621724236 1.37 -7.436990424049397" rotation="0 236.2313060817547 0"></a-entity>
+        <a-entity tour-waypoint="BATH" io3d-uuid="ded31f03-3b5d-4853-92cf-c2131c503690" position="2.672324724104891 1.37 -4.921863131484722" rotation="-71.42572283150552 209.85212314248636 0"></a-entity>
+        <a-entity tour-waypoint="ROOM" io3d-uuid="45f9337f-d399-45db-88f4-d6649c283652" position="-2.5482829725963065 1.37 -7.5484415274099925" rotation="-65.55359585079536 501.42763786344364 0"></a-entity>
+        <a-entity tour-waypoint="LOUNGE" io3d-uuid="61da122b-f597-42e8-b0a2-7cd6f0ce7a5b" position="-2.1250021297212873 1.37 -0.8949577051582036" rotation="-72.04718961972362 496.70317855304586 0"></a-entity>
+        <a-entity tour-waypoint="BEDROOM" io3d-uuid="71d7582f-1951-4414-820d-a21659b36409" position="-2.2694999285447803 1.37 3.7849461379999045" rotation="-73.81854436689933 499.85515246733434 0"></a-entity>
+        <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
     </a-entity>
     <a-sky src="https://storage.3d.io/535e624259ee6b0200000484/2017-08-08_15-19-35_C6qRcB/empire_low.jpg" rotation="0 290 0"></a-sky>
     <a-entity class="io3d-scene" position="0 0 0" rotation="0 0 0" io3d-uuid="ecfa108b-8f1b-4ca9-804c-dadb513c1698">
@@ -190,14 +265,33 @@ AFRAME.registerComponent('cursor-listener', {
             <a-entity io3d-interior="" io3d-furniture="id: 8b5f7079-b42b-4689-9b37-3dd2946bb651" shadow="cast: true; receive: false" position="-3.1054687 3.552713678800501e-15 0.78125" rotation="0 0 0" io3d-uuid="7ee10c71-7be1-4ab9-b770-70e573038ec6"></a-entity>
             <a-entity io3d-interior="" io3d-furniture="id: f12093e6-02d7-4a7f-9fb1-01f0073f7c5f" shadow="cast: true; receive: false" position="-4.5507812 3.552713678800501e-15 0.6835938" rotation="0 90 0" io3d-uuid="3e9a7224-0d35-4556-bb69-66a284972b33"></a-entity>
             <!--asa!-->
-            <a-entity id="ring" position="1.0742188 1 -5.40625"  cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity  id="ring" shadow="cast: true; receive: false" position="-0.3710937 1.5 -2.9882812" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" position="-0.5273437  1.5 -5.8007812" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" position="-3.90625  1.5 -3.2226562" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" position="-1.7773437 1.5 -16 2.4804688" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" position="1.0351563 1.5-16 0.15625" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" position="-0.2929687  1.5 2.4023438" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
-            <a-entity id="ring" shadow="cast: true; receive: false" shadow="cast: true; receive: false" position="-2.1875 2.220446049250313e-16 3.8476563" rotation="0 0 0" cursor-listener geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"material="side: double"></a-entity>
+            <a-entity id="towashroom" position="3.35 0.62 -0.39" cursor-listener-towashroom="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" rotation="-90 1.15 0" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:BATH;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="dintolounge" shadow="cast:true;receive:false" position="0.95 1.45 -5.89" rotation="4.01 171.31 177.62" cursor-listener-dintolounge="" geometry="radiusOuter:0.15;radiusInner:0.1;primitive:ring" material="color:#ff8000;side:double" scale="1 1 1" visible="true">
+                <a-entity text="color:#ff8000;align:center;zOffset:0;letterSpacing:5;lineHeight:50;value:LOUNGE;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="0.5 0.5 0.5" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="diningtoroom" shadow="cast:true;receive:false" position="-0.71 0.1 -5.64" rotation="-90 0 0" cursor-listener-diningtoroom="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:LIVING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="roomtolounge" shadow="cast:true;receive:false" position="-3.1 1.3 -3.22" rotation="0 171.31 171.31" cursor-listener-roomtolounge="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:LIVING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="lontodining" shadow="cast:true;receive:false" position="-0.31 0.1 -1.17" rotation="-90 0 0" cursor-listener-lontodining="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:DINING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="lontostore" shadow="cast:true;receive:false" position="0.55 0.1 0.54" rotation="-90 0 0" cursor-listener-lontostore="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:STORE;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="livetoterrace" shadow="cast:true;receive:false" position="-0.29 0.1 1.97" rotation="-90 0 0" cursor-listener-livetoterrace="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:TERRACE;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="livetobed" shadow="cast:true;receive:false" position="-1.72 0.1 1.97" rotation="-90 0 0" cursor-listener-livetobed="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:BED;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
+            <a-entity id="bedtolive" shadow="cast:true;receive:false" position="-2.12 0.1 3.65" rotation="-90 0 0" cursor-listener-bedtolive="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
+                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:LIVING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
+            </a-entity>
         </a-entity>
     </a-entity>
 </a-scene>
