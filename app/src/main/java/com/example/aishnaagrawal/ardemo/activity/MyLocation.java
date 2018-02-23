@@ -2,18 +2,24 @@ package com.example.aishnaagrawal.ardemo.activity;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,15 +29,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.aishnaagrawal.ardemo.R;
+import com.example.aishnaagrawal.ardemo.model.MarkerLocation;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -54,11 +64,12 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     private static LatLng srcltglng;
     private static LatLng destltglng;
     public double latt, lngg;
+    public  String gptext;
 
 
     /*public static final String TAG = MapsActivity.class.getSimpleName();*/
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private GoogleMap mMap,mMap1; // Might be null if Google Play services APK is not available.
 
     private com.example.aishnaagrawal.ardemo.activity.LocationProvider mLocationProvider;
 
@@ -180,17 +191,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
-        InfoWindowData info = new InfoWindowData();
-        info.setImage("property1");
-        info.setHotel("Hotel : excellent hotels available");
-        info.setFood("Food : all types of restaurants available");
-        info.setTransport("Reach the site by bus, car and train.");
 
-        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
-
-        Marker m = mMap.addMarker(markerOptions);
-        m.setTag(info);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
         mMap.setTrafficEnabled(true);
         settings.setZoomControlsEnabled(true);
@@ -222,6 +223,9 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
        /* Toast.makeText(this, "Info window clicked",
                 Toast.LENGTH_SHORT).show();*/
         /*infoWindowClick();*/
+      /*  marker.getTitle();*/
+        Log.v("sdsds",marker.getTitle());
+         gptext = marker.getTitle();
         openVirtual();
 
     }
@@ -405,41 +409,42 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         LatLng campbell = new LatLng(-34.072022, 150.806118);
         LatLng albany = new LatLng(-34.977138, 117.884153);
 //temp
+
         MarkerOptions markerhsr = new MarkerOptions();
         markerhsr.position(hsr)
                 .title("hsr")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.office_block));
 
-        InfoWindowData infohsr = new InfoWindowData();
-        infohsr.setImage("property1");
-        infohsr.setHotel("Hotel : excellent hotels available");
-        infohsr.setFood("Food : all types of restaurants available");
-        infohsr.setTransport("Reach the site by bus, car and train.");
 
         CustomInfoWindowGoogleMap customInfoWindowhsr = new CustomInfoWindowGoogleMap(this);
+        InfoWindowData infohsr = new InfoWindowData();
+        infohsr.setImage("property1");
+        infohsr.setHotel("mysoresdfsdfgegtfr");
+        infohsr.setFood("Food : all types of restaurants available");
+        infohsr.setTransport("Reach the site by bus, car and train.");
         mMap.setInfoWindowAdapter(customInfoWindowhsr);
         Marker m1 = mMap.addMarker(markerhsr);
         busesList.add(m1);
         m1.setTag(infohsr);
-//maker mysore
+       //mysore
         MarkerOptions markermysore = new MarkerOptions();
         markermysore.position(mysore)
                 .title("mysore")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.apartment));
 
-        InfoWindowData infomysore = new InfoWindowData();
-        infomysore.setImage("property1");
-        infomysore.setHotel("Hotel : excellent hotels available");
-        infomysore.setFood("Food : all types of restaurants available");
-        infomysore.setTransport("Reach the site by bus, car and train.");
 
         CustomInfoWindowGoogleMap customInfoWindowmysore = new CustomInfoWindowGoogleMap(this);
+        InfoWindowData infomysore = new InfoWindowData();
+        infomysore.setImage("property1");
+        infomysore.setHotel("mysore");
+        infomysore.setFood("Food : all types of restaurants available");
+        infomysore.setTransport("Reach the site by bus, car and train.");
         mMap.setInfoWindowAdapter(customInfoWindowmysore);
         Marker m2 = mMap.addMarker(markermysore);
         trainsList.add(m2);
-        m2.setTag(infohsr);
+        m2.setTag(infomysore);
 
         mMap.setOnInfoWindowClickListener(this);
 
@@ -453,6 +458,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));*/
         /*mMap.setOnInfoWindowClickListener(this);*/
     }
+
 
     AlertDialog dialog, dialog1;
     CheckBox buses, trains;
@@ -533,11 +539,13 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
 
     public void openVirtual() {
-
+      /*  String gptext = markerin;*/
         Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
+        startActivityIntent.putExtra("GP", gptext);
         startActivity(startActivityIntent);
 
     }
+
 
 }
 

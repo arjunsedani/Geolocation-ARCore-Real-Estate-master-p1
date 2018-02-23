@@ -533,6 +533,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
         Intent intent = new Intent(this, BrowserActivity.class);
         // intent.putExtra("aasa",gptext);
+        String gptext="mysore";
+        intent.putExtra("GP", gptext);
         startActivity(intent);
     }
 

@@ -44,14 +44,22 @@ public class BrowserActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
         htmlWebView.setWebViewClient(new CustomWebViewClient());
         //arjun
         WebSettings webSetting = htmlWebView.getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDisplayZoomControls(true);
-
-        htmlWebView.loadUrl("file:///android_asset/office.html");
-
+        /*htmlWebView.loadUrl("file:///android_asset/sample.html");*/
+            Bundle bundle=getIntent().getExtras();
+            str1 = bundle.getString("GP");
+        if( str1.equals("mysore")) {
+            htmlWebView.loadUrl("file:///android_asset/sample.html");
+        }
+        else
+        {
+            htmlWebView.loadUrl("file:///android_asset/office.html");
+        }
         /*GoToNewActivity = (ImageView)findViewById(R.id.btnOk);
 
 

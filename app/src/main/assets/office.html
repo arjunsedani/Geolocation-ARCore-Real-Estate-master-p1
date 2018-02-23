@@ -27,7 +27,7 @@ AFRAME.registerComponent('cursor-listener-station1', {
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
 
-      document.querySelector('[camera]').setAttribute('position', '1.6270672254453367 1.37 -7.456440782383291');
+      document.querySelector('[camera]').setAttribute('position', '-17.194717805863434 1.37 19.938664599984424');
     });
   }
 });
@@ -80,6 +80,9 @@ AFRAME.registerComponent('cursor-listener-station5', {
 <div class="camera-controls">
     <div class="waypoints">
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="d3d76cd0-4872-4c17-a3a2-ba76b3be782f">TOP VIEW</button>
+        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="3ebe3787-cafe-4875-aae8-9a87b1b92a7d">WORK AREA 1</button>
+        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="3647878a-322e-40de-b9d4-f1caa36808e6">WORK AREA 2</button>
+        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="5fe79dfe-7438-4f85-8856-c50f175c5bd7">WORK AREA 3</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="d3ca005b-d675-428d-905f-6a0fa2213eaf">LADIES TOILET</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="a6d1b552-ef50-459a-8474-61b064e6d1da">GENTS TOILET2</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="6f861343-8963-408a-bb6e-9d7d0231711c">WORK AREA 4</button>
@@ -88,9 +91,6 @@ AFRAME.registerComponent('cursor-listener-station5', {
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="79c30b42-2f29-43c5-b1a5-865b8e0a8e8d">MEETING ROOM</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="5ada58a3-5e4e-49b2-bdbd-1032fb748854">BIRD VIEW</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="e0ad4bfb-9b04-4498-a76f-8af2132c53e7">RECEPTION VIEW</button>
-        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="3ebe3787-cafe-4875-aae8-9a87b1b92a7d">WORK AREA 1</button>
-        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="3647878a-322e-40de-b9d4-f1caa36808e6">WORK AREA 2</button>
-        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="5fe79dfe-7438-4f85-8856-c50f175c5bd7">WORK AREA 3</button>
 
         <button class="btn-toggle-play"
                 onclick="this.classList.contains('playing') ? document.querySelector('[camera]').components['tour'].pauseTour() : document.querySelector('[camera]').components['tour'].playTour(), this.classList.toggle('playing')">
@@ -1950,6 +1950,13 @@ AFRAME.registerComponent('cursor-listener-station5', {
             <a-entity id="station2" shadow="receive:false" position="1.077 1 -0.096" rotation="90.01166961505233 155 0" cursor-listener-station3="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION3;width:2"></a-entity>
             <a-entity id="diningtoroom-4" shadow="receive:false" position="1.561 1 0.446" rotation="90.01166961505233 155 0" cursor-listener-station4="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION4;width:2"></a-entity>
             <a-entity id="diningtoroom-5" shadow="receive:false" position="1.596 1 1.184" rotation="90.01166961505233 155 0" cursor-listener-station5="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION5;width:2"></a-entity>
+        </a-entity>
+        <a-entity class="nav3" position="-1.243 111.452 2.032" rotation="0 -137.7390539494499 0">
+            <a-entity id="reception" shadow="receive:false" position="-0.323 1 -0.395" rotation="-90.01166961505233  154.98508358288768 0" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:RECEPTION;width:2"></a-entity>
+            <a-entity id="station11" shadow="receive:false" position="0.339 1 -0.392" rotation="-90 155 0" cursor-listener-station1="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION1;width:2"></a-entity>
+            <a-entity id="station22" shadow="receive:false" position="1.077 1 -0.096" rotation="-90 155 0" cursor-listener-station2="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION2;width:2"></a-entity>
+            <a-entity id="station33" shadow="receive:false" position="1.561 1 0.446" rotation="-90 155 0" cursor-listener-station4="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION4;width:2"></a-entity>
+            <a-entity id="station44" shadow="receive:false" position="1.596 1 1.184" rotation="-90 155 0" cursor-listener-station5="" geometry="primitive:circle;radius:0.3" material="side:double;color:#ff8000" text__text1="align:center;color:#000000;letterSpacing:5;lineHeight:10;opacity:2;value:STATION5;width:2"></a-entity>
         </a-entity>
     </a-entity>
 </a-scene>
