@@ -35,6 +35,7 @@ import com.example.aishnaagrawal.ardemo.model.LocationTime;
 import com.example.aishnaagrawal.ardemo.model.MarkerLocation;
 import com.example.aishnaagrawal.ardemo.renderer.BackgroundRenderer;
 import com.example.aishnaagrawal.ardemo.renderer.ObjectRenderer;
+import com.google.android.gms.maps.model.Marker;
 import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Frame.TrackingState;
@@ -46,6 +47,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -64,6 +66,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private GestureDetector mGestureDetector;
     private ObjectRenderer mVirtualObject = new ObjectRenderer();
     private ObjectRenderer mVirtualObject2 = new ObjectRenderer();
+    private ObjectRenderer mVirtualObject3 = new ObjectRenderer();
 
     private final float[] mAnchorMatrix = new float[16];
 
@@ -97,6 +100,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     Pose mPose = new Pose(translation, rotation);
 
     private double ltt, lnn;
+    //names for validatng names and augmenting different objects
+    public  String name1,name2;
 
 
 
@@ -159,13 +164,27 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         ltt = bundle.getDouble("LT");
         lnn = bundle.getDouble("LN");
         mMarkerList = new ArrayList<>();
-            /*MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);*/
-        MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
+           /* MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);*/
+       /* MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
         markerLocation = new MarkerLocation("" + (ltt+0.01), "" + (lnn+0.1));
         marker1 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation);
+        mMarkerList.add(marker1);*/
+        MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
+        MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
+        name1 = marker1.name;
+        MarkerLocation markerLocation1 = new MarkerLocation("" + (ltt+0.01), "" + (lnn+0.1));
+        MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation1);
+        name2 = marker2.name;
+        mMarkerList.add(marker2);
+       /* MarkerLocation markerLocation = new MarkerLocation("" + 12.9197749, "" + 77.4995699);
+        MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
+        mMarkerList.add(marker1);
+        markerLocation = new MarkerLocation("" + 12.9198010, "" + 77.4995682);
+        marker1 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation);
+        mMarkerList.add(marker1);*/
         //arjun
          /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
         /*MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
@@ -402,14 +421,17 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         mSession.setCameraTextureName(mBackgroundRenderer.getTextureId());
 
         // Prepare the other rendering objects.
+
         try {
             mVirtualObject.createOnGlThread(/*context=*/this, "Castle/Castle OBJ.obj", "Castle/Castle Exterior Texture.jpg");
-            //mVirtualObject.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
-          /*  mVirtualObject.createOnGlThread(*//*context=*//*this, "sign.obj", "mchenry.jpg");*/
             mVirtualObject.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
             mVirtualObject2.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
             mVirtualObject2.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
+
+            mVirtualObject3.createOnGlThread(/*context=*/this, "sign.obj", "jb1.jpg");
+            mVirtualObject3.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
+
 
         } catch (IOException e) {
             Log.e(TAG, "Failed to read obj file");
@@ -481,13 +503,19 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 }
 
                 Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
-                mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
-                mVirtualObject2.updateModelMatrix(mAnchorMatrix,scaleFactor);
-                //arjun
-                /*mVirtualObject.updateModelMatrix(mAnchorMatrix, scaleFactor);*/
-                mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
 
-                mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
+                if (Objects.equals(mMarkerList.get(i).name, name1))
+                {
+                    mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
+                    mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
+                    mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
+            }
+            else
+                {
+                    mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
+                }
 
                 if (tap != null) {
                     //showToast(marker.getCategory());
@@ -548,7 +576,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         private LocationTime time;
         @SerializedName("name")
         @Expose
-        private String name;
+        public String name;
         @SerializedName("category")
         @Expose
         private String category;
