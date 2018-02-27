@@ -101,8 +101,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     private double ltt, lnn;
     //names for validatng names and augmenting different objects
-    public  String name1,name2;
-
+    public  String name1,name2,gptext;
 
 
     @Override
@@ -429,7 +428,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             mVirtualObject2.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
             mVirtualObject2.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
-            mVirtualObject3.createOnGlThread(/*context=*/this, "sign.obj", "jb1.jpg");
+            mVirtualObject3.createOnGlThread(/*context=*/this, "sign.obj", "sign2.jpg");
             mVirtualObject3.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
 
@@ -510,11 +509,13 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                     mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
                     mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
+                     gptext="MANTRISQUARE";
             }
             else
                 {
                     mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
+                     gptext="MANTRISQUARE";
                 }
 
                 if (tap != null) {
@@ -561,7 +562,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
         Intent intent = new Intent(this, BrowserActivity.class);
         // intent.putExtra("aasa",gptext);
-        String gptext="mysore";
+       /* String gptext="MANTRISQUARE";*/
         intent.putExtra("GP", gptext);
         startActivity(intent);
     }

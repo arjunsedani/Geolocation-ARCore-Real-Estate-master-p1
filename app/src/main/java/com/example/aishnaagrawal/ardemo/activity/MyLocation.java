@@ -111,9 +111,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                                 MyLocation.this.finish();
                                 break;
                             case R.id.action_music:
-                                Intent startActivityIntent2 = new Intent(MyLocation.this, ARActivity.class);
-                                startActivity(startActivityIntent2);
-                                MyLocation.this.finish();
                                 break;
                         }
                         return false;
@@ -402,7 +399,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
         // Markers locations
         LatLng hsr = new LatLng(12.927618, 77.643575);
-        LatLng mysore = new LatLng(12.946614, 77.529841);
+        LatLng mysore = new LatLng(12.920059, 77.499575);
         LatLng portland = new LatLng(-38.311725, 141.585761);
         LatLng adelaide = new LatLng(-34.928401, 138.605669);
         LatLng perth = new LatLng(-31.951340, 115.857019);
@@ -412,17 +409,18 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
         MarkerOptions markerhsr = new MarkerOptions();
         markerhsr.position(hsr)
-                .title("hsr")
+                .title("MANTRISQUARE")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.office_block));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.apartment));
+
 
 
         CustomInfoWindowGoogleMap customInfoWindowhsr = new CustomInfoWindowGoogleMap(this);
         InfoWindowData infohsr = new InfoWindowData();
-        infohsr.setImage("property1");
-        infohsr.setHotel("mysoresdfsdfgegtfr");
-        infohsr.setFood("Food : all types of restaurants available");
-        infohsr.setTransport("Reach the site by bus, car and train.");
+        infohsr.setImage("home1");
+        infohsr.setHotel("Appartment");
+        infohsr.setFood("3bhk flat");
+        infohsr.setTransport("PRIZE:1.5crore");
         mMap.setInfoWindowAdapter(customInfoWindowhsr);
         Marker m1 = mMap.addMarker(markerhsr);
         busesList.add(m1);
@@ -430,17 +428,17 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
        //mysore
         MarkerOptions markermysore = new MarkerOptions();
         markermysore.position(mysore)
-                .title("mysore")
-                .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.apartment));
+                .title("EVRY INDIA PVT LTD")
+                .snippet("OFFICE SPACE AVAILABLE IN GLOBLE VILLAGE")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.office_block));
 
 
         CustomInfoWindowGoogleMap customInfoWindowmysore = new CustomInfoWindowGoogleMap(this);
         InfoWindowData infomysore = new InfoWindowData();
-        infomysore.setImage("property1");
-        infomysore.setHotel("mysore");
-        infomysore.setFood("Food : all types of restaurants available");
-        infomysore.setTransport("Reach the site by bus, car and train.");
+        infomysore.setImage("myoffice");
+        infomysore.setHotel("Office space with capacity of 635 workstation");
+        infomysore.setFood("available for 5 years of lease");
+        infomysore.setTransport("contact:Viraj at 7777777777");
         mMap.setInfoWindowAdapter(customInfoWindowmysore);
         Marker m2 = mMap.addMarker(markermysore);
         trainsList.add(m2);

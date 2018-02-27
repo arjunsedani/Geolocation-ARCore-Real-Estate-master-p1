@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
-        android:text="Choose Your Budget!"
+        android:text="Choose Type of property!"
         android:textSize="25sp" />
 
     <CheckBox
@@ -23,7 +23,7 @@
         android:layout_below="@+id/title_hour_selection"
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
-        android:text="50lakhs to 1 crore " />
+        android:text="APPARTMENTS" />
 
     <CheckBox
         android:id="@+id/checkBox2"
@@ -32,7 +32,7 @@
         android:layout_below="@+id/checkBox1"
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
-        android:text="1 crore and above" />
+        android:text="OFFICES" />
 
 
     <Button

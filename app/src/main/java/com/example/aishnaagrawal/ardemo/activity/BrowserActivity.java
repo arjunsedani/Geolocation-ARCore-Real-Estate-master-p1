@@ -53,7 +53,7 @@ public class BrowserActivity extends AppCompatActivity {
         /*htmlWebView.loadUrl("file:///android_asset/sample.html");*/
             Bundle bundle=getIntent().getExtras();
             str1 = bundle.getString("GP");
-        if( str1.equals("mysore")) {
+        if( str1.equals("MANTRISQUARE")) {
             htmlWebView.loadUrl("file:///android_asset/sample.html");
         }
         else
