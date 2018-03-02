@@ -254,7 +254,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     @Override
     public void onPause() {
         super.onPause();
-
+      /*  mLocationProvider.disconnect();*/
         mSurfaceView.onPause();
         mSession.pause();
     }
@@ -361,8 +361,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     @Override
     public void onLocationChanged(Location location) {
-
-        mLocation = location;
+        mLocationProvider.connect();
+       /* mLocation = location;*/
         MarkerInfo marker;
 
         for (int i = 0; i < mMarkerList.size(); i++) {
@@ -661,34 +661,4 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         }
 
     }
-  /*  public void initNavigationDrawer1() {
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                int id = menuItem.getItemId();
-
-                switch (id) {
-                    case R.id.nav_first_fragment:
-                        Intent startActivityIntent = new Intent(ARActivity.this, MyLocation.class);
-                        startActivity(startActivityIntent);
-                        ARActivity.this.finish();
-                        break;
-                    case R.id.nav_second_fragment:
-                        //same logic
-                        break;
-                    case R.id.nav_third_fragment:
-                        //same logic
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-    }*/
-
-
 }
