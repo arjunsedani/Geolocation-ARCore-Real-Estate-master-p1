@@ -34,15 +34,22 @@
         android:layout_marginStart="30dp"
         android:text="OFFICES" />
 
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBox2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="HOUSES" />
+
 
     <Button
         android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox2"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_alignStart="@+id/checkBox3"
+        android:layout_below="@+id/checkBox3"
         android:onClick="displaySelectedMarkers"
         android:text="OK" />
 
@@ -50,12 +57,8 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/checkBox2"
-        android:layout_alignRight="@+id/checkBox2"
-        android:layout_below="@+id/checkBox2"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_alignEnd="@+id/title_hour_selection"
+        android:layout_below="@+id/checkBox3"
         android:onClick="doNothing"
         android:text="Cancel" />
 

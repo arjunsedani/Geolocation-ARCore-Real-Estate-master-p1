@@ -392,14 +392,16 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     }*/
 
     //filter marker
-    List<Marker> busesList = new ArrayList<>();
-    List<Marker> trainsList = new ArrayList<>();
+    List<Marker> applist = new ArrayList<>();
+    List<Marker> officelist = new ArrayList<>();
+    List<Marker> houselist = new ArrayList<>();
 
     public void addMarkers2Map() {
 
         // Markers locations
         LatLng hsr = new LatLng(12.927618, 77.643575);
         LatLng mysore = new LatLng(12.920059, 77.499575);
+        LatLng electroniccity = new LatLng(12.98, 77.499575);
         LatLng portland = new LatLng(-38.311725, 141.585761);
         LatLng adelaide = new LatLng(-34.928401, 138.605669);
         LatLng perth = new LatLng(-31.951340, 115.857019);
@@ -423,7 +425,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         infohsr.setTransport("PRIZE:1.5crore");
         mMap.setInfoWindowAdapter(customInfoWindowhsr);
         Marker m1 = mMap.addMarker(markerhsr);
-        busesList.add(m1);
+        applist.add(m1);
         m1.setTag(infohsr);
        //mysore
         MarkerOptions markermysore = new MarkerOptions();
@@ -441,8 +443,27 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         infomysore.setTransport("contact:Viraj at 7777777777");
         mMap.setInfoWindowAdapter(customInfoWindowmysore);
         Marker m2 = mMap.addMarker(markermysore);
-        trainsList.add(m2);
+        officelist.add(m2);
         m2.setTag(infomysore);
+
+        //electronic city
+        MarkerOptions markerelectronic = new MarkerOptions();
+        markerelectronic.position(electroniccity)
+                .title("HOUSE 303/F1")
+                .snippet("VILLA AT THE PRIME LOCATION")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.houseicon));
+
+
+        CustomInfoWindowGoogleMap customInfoWindowelectronic = new CustomInfoWindowGoogleMap(this);
+        InfoWindowData infoelectronic = new InfoWindowData();
+        infoelectronic.setImage("myoffice");
+        infoelectronic.setHotel("4BHK VILLA WITH BASEMENT PARKING");
+        infoelectronic.setFood("available for rent and sale");
+        infoelectronic.setTransport("contact:Viraj at 7777777777");
+        mMap.setInfoWindowAdapter(customInfoWindowelectronic);
+        Marker m3 = mMap.addMarker(markerelectronic);
+        houselist.add(m3);
+        m3.setTag(infoelectronic);
 
         mMap.setOnInfoWindowClickListener(this);
 
@@ -459,7 +480,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
 
     AlertDialog dialog, dialog1;
-    CheckBox buses, trains;
+    CheckBox office, appartment,house;
 
     public void filterTheMarkers(View view) {
 
@@ -470,8 +491,9 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
             View checkBoxView = inflater.inflate(R.layout.marker_selection, null);
 
             builder.setView(checkBoxView);
-            buses = (CheckBox) checkBoxView.findViewById(R.id.checkBox1);
-            trains = (CheckBox) checkBoxView.findViewById(R.id.checkBox2);
+            appartment = (CheckBox) checkBoxView.findViewById(R.id.checkBox1);
+            office = (CheckBox) checkBoxView.findViewById(R.id.checkBox2);
+            house = (CheckBox) checkBoxView.findViewById(R.id.checkBox3);
             Button okButton = (Button) checkBoxView.findViewById(R.id.okButton);
             Button cancelButton = (Button) checkBoxView.findViewById(R.id.cancelButton);
             dialog = builder.create();
@@ -485,41 +507,109 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     public void displaySelectedMarkers(View view) {
 
         dialog.dismiss();
-        Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
+       // Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
         //according these check boxes status execute your code to show/hide markers
-        if (trains.isChecked() && buses.isChecked()) {
+        if (office.isChecked() && appartment.isChecked() && house.isChecked()) {
             //show all markers
-            for (Marker marker : trainsList) {
+            for (Marker marker : officelist) {
                 marker.setVisible(true);
             }
-            for (Marker marker : busesList) {
+            for (Marker marker : applist) {
                 marker.setVisible(true);
             }
-        } else if (trains.isChecked() && !buses.isChecked()) {
+            for (Marker marker : houselist) {
+                marker.setVisible(true);
+            }
+        } else if (office.isChecked() && !appartment.isChecked() && !house.isChecked()) {
             //show trains and hide buses markers
             //if (view.getId() == R.id.checkBox1){
-            for (Marker marker : trainsList) {
+            for (Marker marker : officelist) {
                 marker.setVisible(true);
             }
-            for (Marker marker : busesList) {
+            for (Marker marker : applist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : houselist) {
                 marker.setVisible(false);
             }
             //}
-        } else if (!trains.isChecked() && buses.isChecked()) {
+        } else if (!office.isChecked() && appartment.isChecked()&& !house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
-            for (Marker marker : busesList) {
+            for (Marker marker : applist) {
                 marker.setVisible(true);
             }
-            for (Marker marker : trainsList) {
+            for (Marker marker : officelist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : houselist) {
                 marker.setVisible(false);
             }
             //}
-        } else {
-            for (Marker marker : busesList) {
+        }else if (!office.isChecked() && !appartment.isChecked()&& house.isChecked()) {
+            //hide trains and show buses markers
+            //if (view.getId() == R.id.checkBox2){
+            for (Marker marker : applist) {
                 marker.setVisible(false);
             }
-            for (Marker marker : trainsList) {
+            for (Marker marker : officelist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : houselist) {
+                marker.setVisible(true);
+            }
+            //}
+        }else if (office.isChecked() && appartment.isChecked()&& !house.isChecked()) {
+            //hide trains and show buses markers
+            //if (view.getId() == R.id.checkBox2){
+            for (Marker marker : applist) {
+                marker.setVisible(true);
+            }
+            for (Marker marker : officelist) {
+                marker.setVisible(true);
+            }
+            for (Marker marker : houselist) {
+                marker.setVisible(false);
+            }
+            //}
+        }
+        else if (office.isChecked() && !appartment.isChecked()&& house.isChecked()) {
+            //hide trains and show buses markers
+            //if (view.getId() == R.id.checkBox2){
+            for (Marker marker : applist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : officelist) {
+                marker.setVisible(true);
+            }
+            for (Marker marker : houselist) {
+                marker.setVisible(true);
+            }
+            //}
+        }
+        else if (!office.isChecked() && appartment.isChecked()&& house.isChecked()) {
+            //hide trains and show buses markers
+            //if (view.getId() == R.id.checkBox2){
+            for (Marker marker : applist) {
+                marker.setVisible(true);
+            }
+            for (Marker marker : officelist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : houselist) {
+                marker.setVisible(true);
+            }
+            //}
+        }
+
+        else {
+            for (Marker marker : applist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : officelist) {
+                marker.setVisible(false);
+            }
+            for (Marker marker : houselist) {
                 marker.setVisible(false);
             }
         }
