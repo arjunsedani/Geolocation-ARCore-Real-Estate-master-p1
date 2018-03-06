@@ -1,6 +1,7 @@
 package com.example.aishnaagrawal.ardemo.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -55,10 +56,10 @@ import javax.microedition.khronos.opengles.GL10;
 import javax.vecmath.Vector3f;
 
 
-public class ARActivity extends AppCompatActivity implements GLSurfaceView.Renderer, SensorEventListener, LocationListener,com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback {
+public class ARActivity extends AppCompatActivity implements GLSurfaceView.Renderer, SensorEventListener, LocationListener {
 
     private static final String TAG = ARActivity.class.getSimpleName();
-    private com.example.aishnaagrawal.ardemo.activity.LocationProvider mLocationProvider;
+
     private GLSurfaceView mSurfaceView;
     private Config mDefaultConfig;
     private Session mSession;
@@ -85,6 +86,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
     boolean locationServiceAvailable;
+    private boolean canGetLocation;
 
     /*private static MarkerApi mMarkerApi;*/
     private String mBaseUrl = "http://139.59.30.117:3000/listings/";
@@ -101,7 +103,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     private double ltt, lnn;
     //names for validatng names and augmenting different objects
-    public  String name1,name2;
+    public  String name1,name2,gptext;
 
 
     @Override
@@ -152,8 +154,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         mSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0); // Alpha used for plane blending.
         mSurfaceView.setRenderer(this);
         mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-      /*  mLocationProvider.connect();*/
-        mLocationProvider = new com.example.aishnaagrawal.ardemo.activity.LocationProvider(this, this);
+
         /*mRetrofit = new Retrofit.Builder()
                 .baseUrl(mBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -164,13 +165,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         ltt = bundle.getDouble("LT");
         lnn = bundle.getDouble("LN");
         mMarkerList = new ArrayList<>();
-           /* MarkerLocation markerLocation = new MarkerLocation("" + 12.913714, "" + 77.500570);*/
-       /* MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
-        MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
-        mMarkerList.add(marker1);
-        markerLocation = new MarkerLocation("" + (ltt+0.01), "" + (lnn+0.1));
-        marker1 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation);
-        mMarkerList.add(marker1);*/
+
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
@@ -179,18 +174,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation1);
         name2 = marker2.name;
         mMarkerList.add(marker2);
-       /* MarkerLocation markerLocation = new MarkerLocation("" + 12.9197749, "" + 77.4995699);
-        MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
-        mMarkerList.add(marker1);
-        markerLocation = new MarkerLocation("" + 12.9198010, "" + 77.4995682);
-        marker1 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation);
-        mMarkerList.add(marker1);*/
-        //arjun
-         /*   MarkerLocation markerLocation1 = new MarkerLocation("" + 12.913714, "" + 77.520570);*/
-        /*MarkerLocation markerLocation1 = new MarkerLocation("" + ltt, "" + (lnn + 0.02000));
-        MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building1", markerLocation1);
-        mMarkerList.add(marker2);*/
-        /*initNavigationDrawer1();*/
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation1);
@@ -221,20 +205,21 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     @Override
     protected void onResume() {
         super.onResume();
-        mLocationProvider.connect();
-       /* requestLocationPermission();*/
+
+        requestLocationPermission();
         registerSensors();
         requestCameraPermission();
     }
 
 
-   /* public void requestLocationPermission() {
+    public void requestLocationPermission() {
         if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSIONS_CODE);
         } else {
-            initLocationService();
+           // initLocationService();
+            getLocation();
         }
-    }*/
+    }
 
     public void requestCameraPermission() {
         if (CameraPermissionHelper.hasCameraPermission(this)) {
@@ -254,7 +239,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     @Override
     public void onPause() {
         super.onPause();
-      /*  mLocationProvider.disconnect();*/
+
         mSurfaceView.onPause();
         mSession.pause();
     }
@@ -285,12 +270,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             for (int i = 0; i < mMarkerList.size(); i++) {
 
                 MarkerInfo marker = mMarkerList.get(i);
-                try {
-                    bearing = mLocation.bearingTo(marker.getLocation());
-                } catch (NullPointerException exception) {
-                    bearing = 500;
-                }
-               /* try {
+                bearing = mLocation.bearingTo(marker.getLocation());
+                /*try {
                     bearing = mLocation.bearingTo(marker.getLocation());
                 } catch (NullPointerException exception) {
                     bearing = 100;
@@ -314,7 +295,64 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     public void onAccuracyChanged(Sensor sensor, int i) {
         //do nothing
     }
+    @SuppressLint("MissingPermission")
+    public Location getLocation() {
+        try {
+            this.mLocationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
 
+            // Getting GPS status
+            isGPSEnabled = mLocationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            // Getting network status
+            isNetworkEnabled = mLocationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // No network provider is enabled
+            } else {
+                this.canGetLocation = true;
+                if (isNetworkEnabled) {
+                    mLocationManager.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    Log.d("Network", "Network");
+                    if (mLocationManager != null) {
+                        mLocation = mLocationManager
+                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (mLocation != null) {
+                            /*latitude = mLocation.getLatitude();
+                            longitude = mLocation.getLongitude();*/
+                        }
+                    }
+                }
+                // If GPS enabled, get latitude/longitude using GPS Services
+                if (isGPSEnabled) {
+                    if (mLocation == null) {
+                        mLocationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                        Log.d("GPS Enabled", "GPS Enabled");
+                        if (mLocationManager != null) {
+                            mLocation = mLocationManager
+                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (mLocation != null) {
+                               /* latitude = mLocation.getLatitude();
+                                longitude = mLocation.getLongitude();*/
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return mLocation;
+    }
    /* private void initLocationService() {
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -361,8 +399,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     @Override
     public void onLocationChanged(Location location) {
-        mLocationProvider.connect();
-       /* mLocation = location;*/
+
+        mLocation = location;
         MarkerInfo marker;
 
         for (int i = 0; i < mMarkerList.size(); i++) {
@@ -454,7 +492,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     @Override
     public void onDrawFrame(GL10 gl) {
         // Clear screen to notify driver it should not load any pixels from previous frame.
-
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         try {
@@ -515,13 +552,13 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                     mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
                     mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
-                     /*gptext="MANTRISQUARE";*/
-            }
-            else
+                    gptext="MANTRISQUARE";
+                }
+                else
                 {
                     mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
-                    /* gptext="MANTRISQUARE";*/
+                    gptext="MANTRISQUARE";
                 }
 
                 if (tap != null) {
@@ -568,14 +605,9 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
         Intent intent = new Intent(this, BrowserActivity.class);
         // intent.putExtra("aasa",gptext);
-       String gptext="MANTRISQUARE";
+       /* String gptext="MANTRISQUARE";*/
         intent.putExtra("GP", gptext);
         startActivity(intent);
-    }
-
-    @Override
-    public void handleNewLocation(Location location) {
-        mLocation = location;
     }
 
     public class MarkerInfo {
@@ -640,7 +672,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             Location location = new Location(name);
             location.setLatitude(markerLocation.getLat());
             location.setLongitude(markerLocation.getLng());
-           /* mLocation=location;*/
             return location;
         }
 
@@ -661,4 +692,34 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         }
 
     }
+  /*  public void initNavigationDrawer1() {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+
+                switch (id) {
+                    case R.id.nav_first_fragment:
+                        Intent startActivityIntent = new Intent(ARActivity.this, MyLocation.class);
+                        startActivity(startActivityIntent);
+                        ARActivity.this.finish();
+                        break;
+                    case R.id.nav_second_fragment:
+                        //same logic
+                        break;
+                    case R.id.nav_third_fragment:
+                        //same logic
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }*/
+
+
 }
