@@ -47,7 +47,7 @@ AFRAME.registerComponent('cursor-listener-meettowash', {
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
       document.querySelector('[camera]').components['tour'].goTo("bf9ca3bb-ee1f-4398-a84d-144ea550d1c6");
-      //document.querySelector('[camera]').setAttribute('position', '-2.1250021297212873 1.37 -0.8949577051582036');
+      //document.querySelector('[camera]').setAttribute('position', '-2.5482829725963065 1.37 -7.5484415274099925');
     });
   }
 });
@@ -108,7 +108,7 @@ AFRAME.registerComponent('cursor-listener-washtorecep', {
         <a-entity tour-waypoint="WORK AREA" io3d-uuid="5fe79dfe-7438-4f85-8856-c50f175c5bd7" position="-6.487369374728233 1.37 -24.2172017498675" rotation="0 190.55997134461293 0"></a-entity>
         <a-entity tour-waypoint="WASHROOM" io3d-uuid="bf9ca3bb-ee1f-4398-a84d-144ea550d1c6" position="-0.8854810872543302 1.37 5.501604844385617" rotation="0 278.2971701670334 0"></a-entity>
         <a-entity tour-waypoint="TRAINING ROOM" io3d-uuid="4112da62-f491-4864-a7a4-e6bf8ce293a8" position="6.94778883840157 1.37 -13.005875630845967" rotation="0 352.75650842266464 0"></a-entity>
-        <a-entity tour-waypoint="MEETING ROOM" io3d-uuid="79c30b42-2f29-43c5-b1a5-865b8e0a8e8d" position="-26.148508146406797 1.37 -8.493911534985335" rotation="0 486.1102603369067 0"></a-entity>
+        <a-entity tour-waypoint="MEETING ROOM" io3d-uuid="79c30b42-2f29-43c5-b1a5-865b8e0a8e8d" position="-27.088 1.37 -8.047" rotation="0 486.1102603369067 0"></a-entity>
         <a-entity tour-waypoint="BIRD VIEW" io3d-uuid="5ada58a3-5e4e-49b2-bdbd-1032fb748854" position="-31.697238236949197 67.2829683317841 55.32435968002057" rotation="-51.18464139332426 344.0226964397107 0"></a-entity>
         <a-entity tour-waypoint="RECEPTION VIEW" io3d-uuid="e0ad4bfb-9b04-4498-a76f-8af2132c53e7" position="-8.263843882558163 1.37 18.39955048964219" rotation="0 354.02459519351294 0"></a-entity>
     </a-entity>
@@ -116,7 +116,10 @@ AFRAME.registerComponent('cursor-listener-washtorecep', {
     <a-entity class="io3d-scene" position="0 0 0" rotation="0 0 0" io3d-uuid="5bbbc163-fcb6-4c5a-871d-ee17370ce0a4">
         <a-entity class="io3d-level" position="0 0 0" rotation="0 0 0" io3d-uuid="340fdf71-6d76-4dce-bae6-c5750ef38160">
             <a-entity io3d-data3d="key: 4c9f4bed-af3b-4b39-a532-0cef0f81b622/processing/2018-02-19_09-43-42_6GLTCa/lighting.gz.data3d.buffer; lightMapIntensity: 1.2; lightMapExposure: 0.6" shadow="cast: false; receive: true"></a-entity>
-
+            <a-entity id="startinvr" shadow="receive:false" position="-0.784 116.63628745215799 3.689" rotation="0 -180.02333923010465 0" cursor-listener-washtorecep="" geometry="primitive:plane;height:0.3" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:5;lineHeight:50;side:double;value:START;width:2"></a-entity>
+            <a-entity id="startinvr-2" shadow="receive:false" position="-4.221 116.63628745215799 -0.58" rotation="0 90.012 0" cursor-listener-washtorecep="" geometry="primitive:plane;height:0.3" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:5;lineHeight:50;side:double;value:START;width:2"></a-entity>
+            <a-entity id="startinvr-3" shadow="receive:false" position="-0.665 116.63628745215799 -2.934" cursor-listener-washtorecep="" geometry="primitive:plane;height:0.3" material="side:double;transparent:true;color:#000000" text__text="zOffset:0.01;side:double;align:center;color:#00ff00;letterSpacing:5;lineHeight:50;value:START;width:2"></a-entity>
+            <a-entity id="startinvr-4" shadow="receive:false" position="1.99 116.63628745215799 -0.58" rotation="0 -90.01166961505233 0" cursor-listener-washtorecep="" geometry="primitive:plane;height:0.3" material="side:double;transparent:true;color:#000000" text__text="zOffset:0.01;align:center;color:#00ff00;letterSpacing:5;lineHeight:50;side:double;value:START;width:2"></a-entity>
             <a-entity class="io3d-group" position="-38.75000000000007 0 16.299999999999915" rotation="0 0 0" io3d-uuid="a0b525a4-9e56-45fa-ab8c-ea8244e93f45">
                 <a-entity io3d-wall="material_top:wall_top; material_back:basic-wall; material_front:basic-wall; w: 0.15; h: 2.4; l: 0.6500000000000696; controlLine: back; baseHeight: 0; frontHasBase: true; backHasBase: true; " visible="false" position="-7.105427357601002e-14 0 7.629393685704144e-7" rotation="0 0 0" io3d-uuid="8f6a0abf-ba9e-4db1-87fc-c4ccd65cc99d"></a-entity>
                 <a-entity io3d-wall="material_top:wall_top; material_back:basic-wall; material_front:basic-wall; w: 0.15; h: 2.4; l: 0.69999999999993; controlLine: back; baseHeight: 0; frontHasBase: true; backHasBase: true; " visible="false" position="0.1499999999999133 0 -0.6999992370605614" rotation="0 270 0" io3d-uuid="006ca555-05a9-4bf9-a071-fc822a0af401"></a-entity>
@@ -367,25 +370,11 @@ AFRAME.registerComponent('cursor-listener-washtorecep', {
                 <a-entity io3d-interior="" io3d-furniture="id: 99d45ddd-150a-4674-8e9e-1e4d61eca5ee" shadow="cast: true; receive: false" position="0.4101563 0 0.4882813" rotation="0 169 0" io3d-uuid="c08c298d-3f7a-448d-b890-858b8204c90c"></a-entity>
             </a-entity>
             <!--sdjsd!!-->
-            <a-entity id="receptowork" shadow="cast:true;receive:false" position="-8.28125 0.1 15.5273438" rotation="-90 0 0" cursor-listener-receptowork="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:WORK;width:2" position="0 0 0" rotation="0 0 151.83381570966816" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <!--a-entity io3d-interior="" io3d-furniture="id: 61516ef5-7bc7-4921-8fff-1e4c92aef939" shadow="cast: true; receive: false" position="-8.28125 0 15.5273438" rotation="0 0 0" io3d-uuid="c0d433c0-085d-4f64-a058-a4c5d0e5f0e8"></a-entity!-->
-            <a-entity id="worktotrain" shadow="cast:true;receive:false" position="-5.390625 0.1 -21.5039062" rotation="-90 0 0" cursor-listener-worktotrain="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:TRAINING;width:2" position="0 0 0" rotation="0 0 151.83381570966816" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <!--a-entity io3d-interior="" io3d-furniture="id: 61516ef5-7bc7-4921-8fff-1e4c92aef939" shadow="cast: true; receive: false" position="-5.390625 2.220446049250313e-16 -21.5039062" rotation="0 0 0" io3d-uuid="4f0d14e1-1b3d-4abb-8b71-54b139eadb6e"></a-entity!-->
-            <a-entity id="traintomeet" shadow="cast:true;receive:false" position="7.1875 0.1 -15.3320312" rotation="-90 0 0" cursor-listener-traintomeet="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:MEETING;width:2" position="0 0 0" rotation="0 0 151.83381570966816" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <!--a-entity io3d-interior="" io3d-furniture="id: 61516ef5-7bc7-4921-8fff-1e4c92aef939" shadow="cast: true; receive: false" position="7.1875 -2.220446049250313e-16 -15.3320312" rotation="0 0 0" io3d-uuid="a97a7c00-1e0d-4a58-bbc5-1cf0f85d97e1"></a-entity!-->
-            <a-entity id="meettowash" shadow="cast:true;receive:false" position="-28.2 1.3 -5.41" rotation="0 154.12564689019143 171.31438074411616" cursor-listener-meettowash="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="color:white;align:center;zOffset:0;letterSpacing:5;lineHeight:50;value:WASHROOM;width:2" position="0 0 0" rotation="0 0 -122.61" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="washtorecep" shadow="cast:true;receive:false" position="1.5820313 0.1 5.5859375" rotation="-90 0 0" cursor-listener-washtorecep="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:RECEPTION;width:2" position="0 0 0" rotation="0 0 151.83381570966816" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <!--a-entity io3d-interior="" io3d-furniture="id: e1667c99-222e-4de4-b20c-eaad8fdc9494" shadow="cast: true; receive: false" position="1.5820313 0 5.5859375" rotation="0 0 0" io3d-uuid="62731295-4399-4179-a24b-950a331e81cf"></a-entity!-->
+            <a-entity id="receptowork" shadow="receive:false" position="-8.28125 0.1 15.5273438" rotation="-90 0 0" cursor-listener-receptowork="" geometry="primitive:ring" material="emissive:#ffffff;color:#ffffff;side:double;transparent:true" text__text="width:5;value:WORK;letterSpacing:1;align:center;color:#00ff00;lineHeight:50;side:double" scale="0.3 0.3 0.3"></a-entity>
+            <a-entity id="worktotrain" shadow="receive:false" position="-6.06 0.1 -22.189" rotation="-90.01166961505233 180 0" cursor-listener-worktotrain="" geometry="primitive:ring" material="side:double;transparent:true;color:#ffffff;emissive:#ffffff" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:TRAINING;width:5" scale="0.3 0.3 0.3"></a-entity>
+            <a-entity id="traintomee" shadow="receive:false" position="7.1875 0.1 -15.3320312" rotation="-90 0 0"cursor-listener-traintomeet="" geometry="primitive:ring" material="emissive:#ffffff;color:#ffffff;side:double;transparent:true" text__text="width:5;value:MEETING;letterSpacing:1;align:center;color:#00ff00;lineHeight:50;side:double" scale="0.3 0.3 0.3"></a-entity>
+            <a-entity id="towashroom" shadow="receive:false" position="-28.2 0.3 -8.374" rotation="-90.01166961505233 90.01166961505233 0" cursor-listener-meettowash="" geometry="primitive:ring" material="emissive:#ffffff;color:#ffffff;side:double;transparent:true" text__text="width:5;value:WASHROOM;letterSpacing:1;align:center;color:#00ff00;lineHeight:50;side:double" scale="0.3 0.3 0.3"></a-entity>
+            <a-entity id="traintomee" shadow="receive:false" position="0.827 0.1 5.586" rotation="-90.01166961505233 -90.01166961505233 0" cursor-listener-washtorecep="" geometry="primitive:ring" material="side:double;transparent:true;color:#ffffff;emissive:#ffffff" text__text="value:RECEPTION;width:5;letterSpacing:1;align:center;color:#00ff00;lineHeight:50;side:double" scale="0.3 0.3 0.3"></a-entity>
         </a-entity>
     </a-entity>
 </a-scene>

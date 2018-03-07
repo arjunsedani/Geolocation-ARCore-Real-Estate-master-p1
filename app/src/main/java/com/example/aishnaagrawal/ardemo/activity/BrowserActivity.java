@@ -56,9 +56,13 @@ public class BrowserActivity extends AppCompatActivity {
         if( str1.equals("MANTRISQUARE")) {
             htmlWebView.loadUrl("file:///android_asset/sample.html");
         }
-        else
+        else if( str1.equals("EVRY INDIA PVT LTD"))
         {
             htmlWebView.loadUrl("file:///android_asset/office.html");
+        }
+        else
+        {
+            htmlWebView.loadUrl("file:///android_asset/NewHouse.html");
         }
         /*GoToNewActivity = (ImageView)findViewById(R.id.btnOk);
 
