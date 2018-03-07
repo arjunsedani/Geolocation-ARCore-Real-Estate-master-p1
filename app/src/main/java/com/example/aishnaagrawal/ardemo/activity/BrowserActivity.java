@@ -58,7 +58,7 @@ public class BrowserActivity extends AppCompatActivity {
         }
         else
         {
-            htmlWebView.loadUrl("file:///android_asset/officefull.html");
+            htmlWebView.loadUrl("file:///android_asset/office.html");
         }
         /*GoToNewActivity = (ImageView)findViewById(R.id.btnOk);
 

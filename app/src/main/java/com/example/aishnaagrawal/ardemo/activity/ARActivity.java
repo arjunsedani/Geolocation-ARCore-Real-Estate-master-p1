@@ -68,6 +68,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private ObjectRenderer mVirtualObject = new ObjectRenderer();
     private ObjectRenderer mVirtualObject2 = new ObjectRenderer();
     private ObjectRenderer mVirtualObject3 = new ObjectRenderer();
+    private ObjectRenderer mVirtualObject4 = new ObjectRenderer();
 
     private final float[] mAnchorMatrix = new float[16];
 
@@ -103,7 +104,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
     private double ltt, lnn;
     //names for validatng names and augmenting different objects
-    public  String name1,name2,gptext;
+    public  String name1,name2,name3,gptext;
 
 
     @Override
@@ -170,10 +171,14 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
         name1 = marker1.name;
-        MarkerLocation markerLocation1 = new MarkerLocation("" + (ltt+0.01), "" + (lnn+0.1));
+        MarkerLocation markerLocation1 = new MarkerLocation("" + (ltt+0.000123), "" + (ltt+0.000230));
         MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation1);
         name2 = marker2.name;
         mMarkerList.add(marker2);
+        MarkerLocation markerLocation2 = new MarkerLocation("" + (ltt+0.000243), "" + (ltt+0.000456));
+        MarkerInfo marker3 = new MarkerInfo("Jack Baskin Engineering3", "Academic Building", markerLocation2);
+        name3 = marker3.name;
+        mMarkerList.add(marker3);
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
@@ -321,10 +326,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                     if (mLocationManager != null) {
                         mLocation = mLocationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (mLocation != null) {
-                            /*latitude = mLocation.getLatitude();
-                            longitude = mLocation.getLongitude();*/
-                        }
+
                     }
                 }
                 // If GPS enabled, get latitude/longitude using GPS Services
@@ -338,10 +340,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                         if (mLocationManager != null) {
                             mLocation = mLocationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (mLocation != null) {
-                               /* latitude = mLocation.getLatitude();
-                                longitude = mLocation.getLongitude();*/
-                            }
                         }
                     }
                 }
@@ -474,6 +472,9 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             mVirtualObject3.createOnGlThread(/*context=*/this, "sign.obj", "sign2.jpg");
             mVirtualObject3.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
+            mVirtualObject4.createOnGlThread(/*context=*/this, "sign.obj", "sign3.jpg");
+            mVirtualObject4.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
+
 
         } catch (IOException e) {
             Log.e(TAG, "Failed to read obj file");
@@ -530,36 +531,46 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 return;
             }
 
-            for (int i = 0; i < mMarkerList.size(); i++) {
+         for (int i = 0; i < mMarkerList.size(); i++) {
 
-                marker = mMarkerList.get(i);
+             marker = mMarkerList.get(i);
 
-                if (marker.getInRange()) {
-                    if (marker.getZeroMatrix() == null) {
-                        marker.setZeroMatrix(getCalibrationMatrix());
-                    }
-                }
+             if (marker.getInRange()) {
+                 if (marker.getZeroMatrix() == null) {
+                     marker.setZeroMatrix(getCalibrationMatrix());
+                 }
+             }
 
-                if (marker.getZeroMatrix() == null) {
-                    break;
-                }
 
-                Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
+             if (marker.getZeroMatrix() == null) {
+                 break;
+             }
 
-                if (Objects.equals(mMarkerList.get(i).name, name1))
-                {
-                    mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
-                    mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
-                    mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
-                    mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
-                    gptext="MANTRISQUARE";
-                }
-                else
-                {
-                    mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
-                    mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
-                    gptext="MANTRISQUARE";
-                }
+             mPose = new Pose(translation, rotation);
+             mPose.toMatrix(mAnchorMatrix, 0);
+             Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
+
+             if (Objects.equals(mMarkerList.get(i).name, name1)) {
+
+                 mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
+                 mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                 mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
+                 mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
+                 gptext = "MANTRISQUARE";
+
+             } else if (Objects.equals(mMarkerList.get(i).name, name2)) {
+
+                 mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                 mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
+                 gptext = "MANTRISQUARE";
+             }
+             else if (Objects.equals(mMarkerList.get(i).name, name3))
+             {
+                 mVirtualObject4.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                 mVirtualObject4.draw(viewmtx, projmtx, lightIntensity);
+                 gptext = "MANTRISQUARE";
+
+             }
 
                 if (tap != null) {
                     //showToast(marker.getCategory());
@@ -604,8 +615,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private void launchbrowser() {
 
         Intent intent = new Intent(this, BrowserActivity.class);
-        // intent.putExtra("aasa",gptext);
-       /* String gptext="MANTRISQUARE";*/
         intent.putExtra("GP", gptext);
         startActivity(intent);
     }
@@ -675,7 +684,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             return location;
         }
 
-        float[] getZeroMatrix() {
+        float[] getZeroMatrix(){
             return zeroMatrix;
         }
 
@@ -692,34 +701,4 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         }
 
     }
-  /*  public void initNavigationDrawer1() {
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                int id = menuItem.getItemId();
-
-                switch (id) {
-                    case R.id.nav_first_fragment:
-                        Intent startActivityIntent = new Intent(ARActivity.this, MyLocation.class);
-                        startActivity(startActivityIntent);
-                        ARActivity.this.finish();
-                        break;
-                    case R.id.nav_second_fragment:
-                        //same logic
-                        break;
-                    case R.id.nav_third_fragment:
-                        //same logic
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-    }*/
-
-
 }

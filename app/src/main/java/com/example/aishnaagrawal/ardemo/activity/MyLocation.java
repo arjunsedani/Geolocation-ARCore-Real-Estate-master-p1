@@ -2,6 +2,7 @@ package com.example.aishnaagrawal.ardemo.activity;
 
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,10 +23,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,6 +42,7 @@ import com.example.aishnaagrawal.ardemo.model.MarkerLocation;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -69,20 +74,21 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
     /*public static final String TAG = MapsActivity.class.getSimpleName();*/
 
-    private GoogleMap mMap,mMap1; // Might be null if Google Play services APK is not available.
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     private com.example.aishnaagrawal.ardemo.activity.LocationProvider mLocationProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.my_location_demo);
-        //DRAW PATH
-        /*String url = getDirectionsUrl(RAJKOT,BANGALORE);
-        ReadTask downloadTask = new ReadTask();
-        downloadTask.execute(url);*/
-
-        //setUpMapIfNeeded();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map1);
         mapFragment.getMapAsync(this);
@@ -99,9 +105,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_favorites:
-                              /*  Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
-                                startActivity(startActivityIntent);
-                                MyLocation.this.finish();*/
                                 break;
                             case R.id.action_schedules:
                                 Intent startActivityIntent1 = new Intent(MyLocation.this, ARActivity.class);
@@ -483,7 +486,13 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     CheckBox office, appartment,house;
 
     public void filterTheMarkers(View view) {
-
+        View decorView1 = getWindow().getDecorView();
+        decorView1.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         if (dialog == null) {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(this);
@@ -505,8 +514,15 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
 
     public void displaySelectedMarkers(View view) {
-
+        View decorView2 = getWindow().getDecorView();
+        decorView2.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         dialog.dismiss();
+        View decorView3 = getWindow().getDecorView();
        // Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
         //according these check boxes status execute your code to show/hide markers
         if (office.isChecked() && appartment.isChecked() && house.isChecked()) {
@@ -616,6 +632,13 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
     }
 
     public void doNothing(View view) {
+        View decorView2 = getWindow().getDecorView();
+        decorView2.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         dialog.dismiss();
 
     }
