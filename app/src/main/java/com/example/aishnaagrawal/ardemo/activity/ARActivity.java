@@ -17,8 +17,6 @@ import android.opengl.Matrix;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Range;
@@ -32,11 +30,9 @@ import android.widget.Toast;
 import com.example.aishnaagrawal.ardemo.R;
 import com.example.aishnaagrawal.ardemo.helper.CameraPermissionHelper;
 import com.example.aishnaagrawal.ardemo.model.LocationTime;
-/*import com.example.aishnaagrawal.ardemo.model.MarkerInfo;*/
 import com.example.aishnaagrawal.ardemo.model.MarkerLocation;
 import com.example.aishnaagrawal.ardemo.renderer.BackgroundRenderer;
 import com.example.aishnaagrawal.ardemo.renderer.ObjectRenderer;
-import com.google.android.gms.maps.model.Marker;
 import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Frame.TrackingState;
@@ -65,7 +61,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private Session mSession;
     private BackgroundRenderer mBackgroundRenderer = new BackgroundRenderer();
     private GestureDetector mGestureDetector;
-    private ObjectRenderer mVirtualObject = new ObjectRenderer();
     private ObjectRenderer mVirtualObject2 = new ObjectRenderer();
     private ObjectRenderer mVirtualObject3 = new ObjectRenderer();
     private ObjectRenderer mVirtualObject4 = new ObjectRenderer();
@@ -81,17 +76,11 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
 
-    private LocationManager mLocationManager;
     public Location mLocation;
 
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
-    boolean locationServiceAvailable;
-    private boolean canGetLocation;
 
-    /*private static MarkerApi mMarkerApi;*/
-    private String mBaseUrl = "http://139.59.30.117:3000/listings/";
-    /*private Retrofit mRetrofit;*/
 
     private List<MarkerInfo> mMarkerList;
     private Frame mFrame;
@@ -101,10 +90,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     float[] rotation = new float[]{0.0f, -1.00f, 0.0f, 0.3f};
 
     Pose mPose = new Pose(translation, rotation);
-
-    private double ltt, lnn;
     //names for validatng names and augmenting different objects
-    public  String name1,name2,name3,gptext;
+    public String name1, name2, name3, gptext;
 
 
     @Override
@@ -113,7 +100,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         setContentView(R.layout.activity_ar);
 
 
-        mSurfaceView = (GLSurfaceView) findViewById(R.id.surfaceview);
+        mSurfaceView = findViewById(R.id.surfaceview);
         mSession = new Session(/*context=*/this);
         mSensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 
@@ -156,33 +143,27 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         mSurfaceView.setRenderer(this);
         mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
-        /*mRetrofit = new Retrofit.Builder()
-                .baseUrl(mBaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mMarkerApi = mRetrofit.create(MarkerApi.class);*/
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        ltt = bundle.getDouble("LT");
-        lnn = bundle.getDouble("LN");
+        double ltt = bundle.getDouble("LT");
+        double lnn = bundle.getDouble("LN");
         mMarkerList = new ArrayList<>();
 
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
         MarkerInfo marker1 = new MarkerInfo("Jack Baskin Engineering1", "Academic Building", markerLocation);
         mMarkerList.add(marker1);
         name1 = marker1.name;
-        MarkerLocation markerLocation1 = new MarkerLocation("" + (ltt+0.000123), "" + (ltt+0.000230));
+        MarkerLocation markerLocation1 = new MarkerLocation("" + (ltt + 0.000123), "" + (ltt + 0.000230));
         MarkerInfo marker2 = new MarkerInfo("Jack Baskin Engineering2", "Academic Building", markerLocation1);
         name2 = marker2.name;
         mMarkerList.add(marker2);
-        MarkerLocation markerLocation2 = new MarkerLocation("" + (ltt+0.000243), "" + (ltt+0.000456));
+        MarkerLocation markerLocation2 = new MarkerLocation("" + (ltt + 0.000243), "" + (ltt + 0.000456));
         MarkerInfo marker3 = new MarkerInfo("Jack Baskin Engineering3", "Academic Building", markerLocation2);
         name3 = marker3.name;
         mMarkerList.add(marker3);
 
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation1);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation1);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -221,7 +202,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSIONS_CODE);
         } else {
-           // initLocationService();
+            // initLocationService();
             getLocation();
         }
     }
@@ -276,11 +257,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
                 MarkerInfo marker = mMarkerList.get(i);
                 bearing = mLocation.bearingTo(marker.getLocation());
-                /*try {
-                    bearing = mLocation.bearingTo(marker.getLocation());
-                } catch (NullPointerException exception) {
-                    bearing = 100;
-                }*/
                 azimuth = (float) Math.toDegrees(orientationValues[0]);
                 pitch = (float) Math.toDegrees(orientationValues[1]);
 
@@ -300,12 +276,14 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     public void onAccuracyChanged(Sensor sensor, int i) {
         //do nothing
     }
+
     @SuppressLint("MissingPermission")
-    public Location getLocation() {
+    public void getLocation() {
         try {
-            this.mLocationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+            LocationManager mLocationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 
             // Getting GPS status
+            assert mLocationManager != null;
             isGPSEnabled = mLocationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -313,87 +291,34 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             isNetworkEnabled = mLocationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                // No network provider is enabled
-            } else {
-                this.canGetLocation = true;
-                if (isNetworkEnabled) {
+            if (isNetworkEnabled) {
+                mLocationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Log.d("Network", "Network");
+                mLocation = mLocationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            }
+            // If GPS enabled, get latitude/longitude using GPS Services
+            if (isGPSEnabled) {
+                if (mLocation == null) {
                     mLocationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
+                            LocationManager.GPS_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("Network", "Network");
-                    if (mLocationManager != null) {
-                        mLocation = mLocationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-                    }
-                }
-                // If GPS enabled, get latitude/longitude using GPS Services
-                if (isGPSEnabled) {
-                    if (mLocation == null) {
-                        mLocationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("GPS Enabled", "GPS Enabled");
-                        if (mLocationManager != null) {
-                            mLocation = mLocationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        }
-                    }
+                    Log.d("GPS Enabled", "GPS Enabled");
+                    mLocation = mLocationManager
+                            .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 }
             }
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return mLocation;
     }
-   /* private void initLocationService() {
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        try {
-            this.mLocationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-
-            // Get GPS and network status
-            this.isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            this.isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!isNetworkEnabled && !isGPSEnabled) {
-                // cannot get location
-                this.locationServiceAvailable = false;
-            }
-
-            this.locationServiceAvailable = true;
-
-            if (isNetworkEnabled) {
-                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                if (mLocationManager != null) {
-                    mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                }
-            }
-
-            if (isGPSEnabled) {
-                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                if (mLocationManager != null) {
-                    mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                }
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-
-        }
-    }*/
 
     @Override
     public void onLocationChanged(Location location) {
@@ -423,7 +348,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] results) {
         if (!CameraPermissionHelper.hasCameraPermission(this)) {
             Toast.makeText(this,
                     "Camera permission is needed to run this application", Toast.LENGTH_LONG).show();
@@ -463,10 +388,9 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         // Prepare the other rendering objects.
 
         try {
-            mVirtualObject.createOnGlThread(/*context=*/this, "Castle/Castle OBJ.obj", "Castle/Castle Exterior Texture.jpg");
-            mVirtualObject.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
-            mVirtualObject2.createOnGlThread(/*context=*/this, "sign.obj", "mchenry.jpg");
+
+            mVirtualObject2.createOnGlThread(/*context=*/this, "sign.obj", "sign4.jpg");
             mVirtualObject2.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
 
             mVirtualObject3.createOnGlThread(/*context=*/this, "sign.obj", "sign2.jpg");
@@ -531,46 +455,39 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                 return;
             }
 
-         for (int i = 0; i < mMarkerList.size(); i++) {
+            for (int i = 0; i < mMarkerList.size(); i++) {
 
-             marker = mMarkerList.get(i);
+                marker = mMarkerList.get(i);
 
-             if (marker.getInRange()) {
-                 if (marker.getZeroMatrix() == null) {
-                     marker.setZeroMatrix(getCalibrationMatrix());
-                 }
-             }
+                if (marker.getInRange()) {
+                    if (marker.getZeroMatrix() == null) {
+                        marker.setZeroMatrix(getCalibrationMatrix());
+                    }
+                }
 
 
-             if (marker.getZeroMatrix() == null) {
-                 break;
-             }
+                if (marker.getZeroMatrix() == null) {
+                    break;
+                }
 
-             mPose = new Pose(translation, rotation);
-             mPose.toMatrix(mAnchorMatrix, 0);
-             Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
+                mPose = new Pose(translation, rotation);
+                mPose.toMatrix(mAnchorMatrix, 0);
+                Matrix.multiplyMM(viewmtx, 0, viewmtx, 0, marker.getZeroMatrix(), 0);
 
-             if (Objects.equals(mMarkerList.get(i).name, name1)) {
+                if (Objects.equals(mMarkerList.get(i).name, name1)) {
+                    mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
+                    gptext = "MANTRISQUARE";
 
-                 mVirtualObject.updateModelMatrix(mAnchorMatrix, 0.009f);
-                 mVirtualObject2.updateModelMatrix(mAnchorMatrix, scaleFactor);
-                 mVirtualObject.draw(viewmtx, projmtx, lightIntensity);
-                 mVirtualObject2.draw(viewmtx, projmtx, lightIntensity);
-                 gptext = "MANTRISQUARE";
-
-             } else if (Objects.equals(mMarkerList.get(i).name, name2)) {
-
-                 mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
-                 mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
-                 gptext = "MANTRISQUARE";
-             }
-             else if (Objects.equals(mMarkerList.get(i).name, name3))
-             {
-                 mVirtualObject4.updateModelMatrix(mAnchorMatrix, scaleFactor);
-                 mVirtualObject4.draw(viewmtx, projmtx, lightIntensity);
-                 gptext = "MANTRISQUARE";
-
-             }
+                } else if (Objects.equals(mMarkerList.get(i).name, name2)) {
+                    mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
+                    gptext = "MANTRISQUARE";
+                } else if (Objects.equals(mMarkerList.get(i).name, name3)) {
+                    mVirtualObject4.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    mVirtualObject4.draw(viewmtx, projmtx, lightIntensity);
+                    gptext = "MANTRISQUARE";
+                }
 
                 if (tap != null) {
                     //showToast(marker.getCategory());
@@ -603,17 +520,7 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
         return m;
     }
 
-    private void showToast(final String category) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void launchbrowser() {
-
         Intent intent = new Intent(this, BrowserActivity.class);
         intent.putExtra("GP", gptext);
         startActivity(intent);
@@ -673,10 +580,6 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             return time;
         }
 
-        public String getCategory() {
-            return category;
-        }
-
         Location getLocation() {
             Location location = new Location(name);
             location.setLatitude(markerLocation.getLat());
@@ -684,20 +587,12 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
             return location;
         }
 
-        float[] getZeroMatrix(){
+        float[] getZeroMatrix() {
             return zeroMatrix;
         }
 
         void setZeroMatrix(float[] zeroMatrix) {
             this.zeroMatrix = zeroMatrix;
-        }
-
-        public ObjectRenderer getVirtualObject() {
-            return virtualObject;
-        }
-
-        public void setVirtualObject(ObjectRenderer virtualObject) {
-            this.virtualObject = virtualObject;
         }
 
     }

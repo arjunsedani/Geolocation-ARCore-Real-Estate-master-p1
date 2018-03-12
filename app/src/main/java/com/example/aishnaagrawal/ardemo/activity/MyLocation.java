@@ -2,77 +2,43 @@ package com.example.aishnaagrawal.ardemo.activity;
 
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.example.aishnaagrawal.ardemo.R;
-import com.example.aishnaagrawal.ardemo.model.MarkerLocation;
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
 public class MyLocation extends AppCompatActivity implements com.example.aishnaagrawal.ardemo.activity.LocationProvider.LocationCallback, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback {
 
 
-    private static final LatLng RAJKOT = new LatLng(22.3039, 70.8022);
-    private static final LatLng BANGALORE = new LatLng(12.9716, 77.5946);
-    private static LatLng srcltglng;
-    private static LatLng destltglng;
     public double latt, lngg;
-    public  String gptext;
+    public String gptext;
 
-
-    /*public static final String TAG = MapsActivity.class.getSimpleName();*/
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -83,7 +49,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         super.onCreate(savedInstanceState);
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
-                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
@@ -95,7 +61,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
         mLocationProvider = new com.example.aishnaagrawal.ardemo.activity.LocationProvider(this, this);
 
-        /*initNavigationDrawer();*/
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -136,21 +101,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         mLocationProvider.disconnect();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -163,28 +113,17 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
     public void handleNewLocation(Location location) {
-        //BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(R.drawable.arjun);
         UiSettings settings = mMap.getUiSettings();
-        /*Log.d(TAG, location.toString());*/
-
         double currentLatitude = location.getLatitude();
         latt = currentLatitude;
         double currentLongitude = location.getLongitude();
         lngg = currentLongitude;
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-        srcltglng = latLng;
-        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.arjun))
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng)
                 .title("Snowqualmie Falls")
@@ -197,37 +136,15 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         settings.setZoomControlsEnabled(true);
         settings.setCompassEnabled(true);
         mMap.setOnInfoWindowClickListener(this);
-        /*m.showInfoWindow();*/
-     /*   MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title("I am here!")
-                .snippet(String.valueOf(latLng))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
-        //.icon(vectorToBitmap(R.drawable.arjun, Color.parseColor("#A4C639")));
-
-        mMap.addMarker(options);
-        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-        mMap.setTrafficEnabled(true);
-        settings.setZoomControlsEnabled(true);
-        settings.setCompassEnabled(true);
-        mMap.setOnInfoWindowClickListener(this);*/
     }
 
     //1111
     @Override
     public void onInfoWindowClick(Marker marker) {
-      /*  Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
-        startActivity(startActivityIntent);*/
-       /* Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();*/
-        /*infoWindowClick();*/
-      /*  marker.getTitle();*/
-        Log.v("sdsds",marker.getTitle());
-         gptext = marker.getTitle();
+        Log.v("sdsds", marker.getTitle());
+        gptext = marker.getTitle();
         openVirtual();
-
     }
 
 
@@ -242,157 +159,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         mMap.setMyLocationEnabled(true);
     }
 
-  /*  public void onMapSearchmylocation(View view) {
-        UiSettings settings = mMap.getUiSettings();
-        EditText locationSearch = (EditText) findViewById(R.id.editText);
-        String location = locationSearch.getText().toString();
-        List<Address> addressList = null;
-
-        if (location != null || !location.equals("")) {
-            Geocoder geocoder = new Geocoder(this);
-            try {
-                addressList = geocoder.getFromLocationName(location, 1);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Address address = addressList.get(0);
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            destltglng = latLng;
-            String url = getDirectionsUrl(srcltglng, destltglng);
-            ReadTask downloadTask = new ReadTask();
-            downloadTask.execute(url);
-            MarkerOptions options = new MarkerOptions()
-                    .position(latLng)
-                    .title("I am here!")
-                    .snippet(String.valueOf(latLng))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            //.icon(vectorToBitmap(R.drawable.arjun, Color.parseColor("#A4C639")));
-
-            mMap.addMarker(options);
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-            mMap.setTrafficEnabled(true);
-            settings.setZoomControlsEnabled(true);
-            settings.setCompassEnabled(true);
-            mMap.setOnInfoWindowClickListener(this);
-        }
-    }*/
-
-    private String getDirectionsUrl(LatLng origin, LatLng dest) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Sensor enabled
-        String sensor = "sensor=false";
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-        // Output format
-        String output = "json";
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-    }
-
-    private class ReadTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... url) {
-            String data = "";
-            try {
-                HttpConnection http = new HttpConnection();
-                data = http.readUrl(url[0]);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            new ParserTask().execute(result);
-        }
-    }
-
-    private class ParserTask extends
-            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(
-                String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                PathJSONParser parser = new PathJSONParser();
-                routes = parser.parse(jObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
-            ArrayList<LatLng> points = null;
-            PolylineOptions polyLineOptions = null;
-
-            // traversing through routes
-            for (int i = 0; i < routes.size(); i++) {
-                points = new ArrayList<LatLng>();
-                polyLineOptions = new PolylineOptions();
-                List<HashMap<String, String>> path = routes.get(i);
-
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap<String, String> point = path.get(j);
-
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
-
-                    points.add(position);
-                }
-
-                polyLineOptions.addAll(points);
-                polyLineOptions.width(5);
-                polyLineOptions.color(Color.BLUE);
-            }
-
-            mMap.addPolyline(polyLineOptions);
-        }
-    }
-
-   /* public void initNavigationDrawer() {
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                int id = menuItem.getItemId();
-
-                switch (id) {
-                    case R.id.nav_first_fragment:
-                        Intent startActivityIntent = new Intent(MyLocation.this, ARActivity.class);
-                        startActivityIntent.putExtra("LT", latt);
-                        startActivityIntent.putExtra("LN", lngg);
-                        startActivity(startActivityIntent);
-                        MyLocation.this.finish();
-                        break;
-                    case R.id.nav_second_fragment:
-                        //same logic
-                        break;
-                    case R.id.nav_third_fragment:
-                        //same logic
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-    }*/
 
     //filter marker
     List<Marker> applist = new ArrayList<>();
@@ -405,11 +171,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         LatLng hsr = new LatLng(12.927618, 77.643575);
         LatLng mysore = new LatLng(12.920059, 77.499575);
         LatLng electroniccity = new LatLng(12.98, 77.499575);
-        LatLng portland = new LatLng(-38.311725, 141.585761);
-        LatLng adelaide = new LatLng(-34.928401, 138.605669);
-        LatLng perth = new LatLng(-31.951340, 115.857019);
-        LatLng campbell = new LatLng(-34.072022, 150.806118);
-        LatLng albany = new LatLng(-34.977138, 117.884153);
+
 //temp
 
         MarkerOptions markerhsr = new MarkerOptions();
@@ -417,7 +179,6 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 .title("MANTRISQUARE")
                 .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.apartment));
-
 
 
         CustomInfoWindowGoogleMap customInfoWindowhsr = new CustomInfoWindowGoogleMap(this);
@@ -430,7 +191,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         Marker m1 = mMap.addMarker(markerhsr);
         applist.add(m1);
         m1.setTag(infohsr);
-       //mysore
+        //mysore
         MarkerOptions markermysore = new MarkerOptions();
         markermysore.position(mysore)
                 .title("EVRY INDIA PVT LTD")
@@ -459,7 +220,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
         CustomInfoWindowGoogleMap customInfoWindowelectronic = new CustomInfoWindowGoogleMap(this);
         InfoWindowData infoelectronic = new InfoWindowData();
-        infoelectronic.setImage("myoffice");
+        infoelectronic.setImage("mantrivillas");
         infoelectronic.setHotel("4BHK VILLA WITH BASEMENT PARKING");
         infoelectronic.setFood("available for rent and sale");
         infoelectronic.setTransport("contact:Viraj at 7777777777");
@@ -469,21 +230,11 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
         m3.setTag(infoelectronic);
 
         mMap.setOnInfoWindowClickListener(this);
-
-        // busesList.add(mMap.addMarker(new MarkerOptions().position(campbell).title("Marker in Campbell").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Campbell")));
-
-       /* busesList.add(mMap.addMarker(new MarkerOptions().position(albany).title("Marker in Albany").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Albany")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Sydney")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(katoomba).title("Marker in Katoomba").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Katoomba")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(portland).title("Marker in Portland").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Portland")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Adelaide")));
-        trainsList.add(mMap.addMarker(new MarkerOptions().position(perth).title("Marker in Perth").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location_black_24dp)).snippet("an hour interval for Perth")));*/
-        /*mMap.setOnInfoWindowClickListener(this);*/
     }
 
 
-    AlertDialog dialog, dialog1;
-    CheckBox office, appartment,house;
+    AlertDialog dialog;
+    CheckBox office, appartment, house;
 
     public void filterTheMarkers(View view) {
         View decorView1 = getWindow().getDecorView();
@@ -523,7 +274,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         dialog.dismiss();
         View decorView3 = getWindow().getDecorView();
-       // Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
+        // Log.i("TAG", "Trains Status " + trains.isChecked() + " Bus Status  " + buses.isChecked());
         //according these check boxes status execute your code to show/hide markers
         if (office.isChecked() && appartment.isChecked() && house.isChecked()) {
             //show all markers
@@ -549,7 +300,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(false);
             }
             //}
-        } else if (!office.isChecked() && appartment.isChecked()&& !house.isChecked()) {
+        } else if (!office.isChecked() && appartment.isChecked() && !house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
             for (Marker marker : applist) {
@@ -562,7 +313,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(false);
             }
             //}
-        }else if (!office.isChecked() && !appartment.isChecked()&& house.isChecked()) {
+        } else if (!office.isChecked() && !appartment.isChecked() && house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
             for (Marker marker : applist) {
@@ -575,7 +326,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(true);
             }
             //}
-        }else if (office.isChecked() && appartment.isChecked()&& !house.isChecked()) {
+        } else if (office.isChecked() && appartment.isChecked() && !house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
             for (Marker marker : applist) {
@@ -588,8 +339,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(false);
             }
             //}
-        }
-        else if (office.isChecked() && !appartment.isChecked()&& house.isChecked()) {
+        } else if (office.isChecked() && !appartment.isChecked() && house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
             for (Marker marker : applist) {
@@ -602,8 +352,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(true);
             }
             //}
-        }
-        else if (!office.isChecked() && appartment.isChecked()&& house.isChecked()) {
+        } else if (!office.isChecked() && appartment.isChecked() && house.isChecked()) {
             //hide trains and show buses markers
             //if (view.getId() == R.id.checkBox2){
             for (Marker marker : applist) {
@@ -616,9 +365,7 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                 marker.setVisible(true);
             }
             //}
-        }
-
-        else {
+        } else {
             for (Marker marker : applist) {
                 marker.setVisible(false);
             }
@@ -643,20 +390,12 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
 
     }
 
-    public void doNothing1(View view) {
-        dialog1.dismiss();
-
-    }
-
 
     public void openVirtual() {
       /*  String gptext = markerin;*/
         Intent startActivityIntent = new Intent(MyLocation.this, BrowserActivity.class);
         startActivityIntent.putExtra("GP", gptext);
         startActivity(startActivityIntent);
-
     }
-
-
 }
 

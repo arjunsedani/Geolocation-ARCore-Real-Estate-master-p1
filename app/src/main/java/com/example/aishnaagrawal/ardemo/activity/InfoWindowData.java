@@ -44,9 +44,4 @@ public class InfoWindowData {
     public void setTransport(String transport) {
         this.transport = transport;
     }
-
-    public void setImage(int evry_logo) {
-    }
-
-
 }
