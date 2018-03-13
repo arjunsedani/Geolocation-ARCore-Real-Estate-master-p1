@@ -51,8 +51,8 @@ public class BrowserActivity extends AppCompatActivity {
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDisplayZoomControls(true);
         /*htmlWebView.loadUrl("file:///android_asset/sample.html");*/
-            Bundle bundle=getIntent().getExtras();
-            str1 = bundle.getString("GP");
+        Bundle bundle=getIntent().getExtras();
+        str1 = bundle.getString("GP");
         if( str1.equals("MANTRISQUARE")) {
             htmlWebView.loadUrl("file:///android_asset/sample.html");
         }

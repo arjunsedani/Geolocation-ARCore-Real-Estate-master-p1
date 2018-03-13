@@ -11,12 +11,12 @@
         android:id="@+id/action_schedules"
         android:enabled="true"
         android:icon="@drawable/ic_menu_camera"
-        android:title="Camerview"
+        android:title="Cameraview"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_music"
         android:enabled="true"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="settings"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="About"
         app:showAsAction="ifRoom" />
 </menu>
