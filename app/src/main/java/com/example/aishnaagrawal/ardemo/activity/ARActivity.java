@@ -145,8 +145,8 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
 
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        double ltt = bundle.getDouble("LT");
-        double lnn = bundle.getDouble("LN");
+        final double ltt = bundle.getDouble("LT");
+        final double lnn = bundle.getDouble("LN");
         mMarkerList = new ArrayList<>();
 
         MarkerLocation markerLocation = new MarkerLocation("" + ltt, "" + lnn);
@@ -178,9 +178,11 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                             case R.id.action_schedules:
                                 break;
                             case R.id.action_music:
-                              /*  Intent startActivityIntent2 = new Intent(MyLocation.this, ARActivity.class);
+                                Intent startActivityIntent2 = new Intent(ARActivity.this, AboutActivity.class);
+                                startActivityIntent2.putExtra("LT", ltt);
+                                startActivityIntent2.putExtra("LN", lnn);
                                 startActivity(startActivityIntent2);
-                                MyLocation.this.finish();*/
+                                ARActivity.this.finish();
                                 break;
                         }
                         return false;

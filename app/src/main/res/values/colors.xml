@@ -2,4 +2,6 @@
 <resources>
     <!--<color name="colorPrimary">#3F51B5</color>-->
     <color name="colorPrimary">#007054</color>
+    <color name="colorPrimary1">#852fb4</color>
+    <color name="colorPrimary2">#e5308d</color>
 </resources>

@@ -79,6 +79,11 @@ public class MyLocation extends AppCompatActivity implements com.example.aishnaa
                                 MyLocation.this.finish();
                                 break;
                             case R.id.action_music:
+                                Intent startActivityIntent2 = new Intent(MyLocation.this, AboutActivity.class);
+                                startActivityIntent2.putExtra("LT", latt);
+                                startActivityIntent2.putExtra("LN", lngg);
+                                startActivity(startActivityIntent2);
+                                MyLocation.this.finish();
                                 break;
                         }
                         return false;
