@@ -482,13 +482,13 @@ public class ARActivity extends AppCompatActivity implements GLSurfaceView.Rende
                     gptext = "MANTRISQUARE";
 
                 } else if (Objects.equals(mMarkerList.get(i).name, name2)) {
-                    mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                    /*mVirtualObject3.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject3.draw(viewmtx, projmtx, lightIntensity);
-                    gptext = "MANTRISQUARE";
+                    gptext = "MANTRISQUARE";*/
                 } else if (Objects.equals(mMarkerList.get(i).name, name3)) {
-                    mVirtualObject4.updateModelMatrix(mAnchorMatrix, scaleFactor);
+                 /*   mVirtualObject4.updateModelMatrix(mAnchorMatrix, scaleFactor);
                     mVirtualObject4.draw(viewmtx, projmtx, lightIntensity);
-                    gptext = "MANTRISQUARE";
+                    gptext = "MANTRISQUARE";*/
                 }
 
                 if (tap != null) {

@@ -92,7 +92,13 @@ AFRAME.registerComponent('cursor-listener-bedtolive', {
     });
   }
 });
-
+AFRAME.registerComponent('cursor-listener-livetoterrace', {
+  init: function () {
+    this.el.addEventListener('click', function (evt) {
+    document.querySelector('[camera]').components['tour'].goTo("ab9ea2a7-91a1-4f1a-a3bc-e4a7b27fcbd1");
+    });
+  }
+});
 
 AFRAME.registerComponent('cursor-listener-towall1', {
   init: function () {
@@ -157,7 +163,6 @@ AFRAME.registerComponent('cursor-listener-addfurnish', {
 <!-- ui -->
 <div class="camera-controls">
     <div class="waypoints">
-        <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="89175bee-b73d-4264-9149-da75a209c08d">TOP VIEW</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8">DINING</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="e51b9208-9b42-443c-9019-bdb85629acbc">KITCHEN</button>
         <button class="btn-waypoint" onclick="document.querySelector('[camera]').components['tour'].goTo(this.dataset.waypointId)" data-waypoint-id="6369302e-9961-4913-8001-4f1f7351152a">TOP VIEW</button>
@@ -194,7 +199,6 @@ AFRAME.registerComponent('cursor-listener-addfurnish', {
                   geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
                   material="color: black; shader: flat">
         </a-entity>
-        <a-entity tour-waypoint="TOP VIEW" io3d-uuid="89175bee-b73d-4264-9149-da75a209c08d" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
         <a-entity tour-waypoint="DINING" io3d-uuid="bbe4ed1d-d9ff-4158-9c56-99f4e62d9bc8" position="1.6270672254453367 1.37 -7.456440782383291" rotation="0 534.1176470588235 0"></a-entity>
         <a-entity tour-waypoint="KITCHEN" io3d-uuid="e51b9208-9b42-443c-9019-bdb85629acbc" position="1.6362287621724236 1.37 -7.436990424049397" rotation="0 236.2313060817547 0"></a-entity>
         <a-entity tour-waypoint="TOP VIEW" io3d-uuid="6369302e-9961-4913-8001-4f1f7351152a" position="-0.6845161958873108 18.60511092481458 0.008619750221134204" rotation="-89 180 0"></a-entity>
@@ -224,8 +228,8 @@ AFRAME.registerComponent('cursor-listener-addfurnish', {
                 <a-entity id="floor1"io3d-polyfloor="material_top:floor_vintage_timber_3; material_side:basic-wall; material_ceiling:basic-ceiling; h: 0.2; polygon: [[1.2045952901797152,-2.623610206472563],[-4.819017911338092,-2.623610206472562],[-4.819017911338091,2.6280572170445193],[1.1811757742934788,2.6280572170445184],[1.1811757742934788,1.132159808818809],[2.4332468468648982,1.1321598088188092],[2.4332468468648982,-1.1366068193907664],[1.204595290179714,-1.136606819390766],[1.2045952901797152,-2.623610206472563]]; polygonHoles: ; hasCeiling: true; hCeiling: 2.4; usage: ; " visible="true" position="0 0 0" rotation="0 0 0" io3d-uuid="03b439b7-65b8-4915-a097-3b0c1e5080b8"></a-entity>
                 <a-entity id="floor2"io3d-polyfloor="material_top:floor_tiles_001; material_side:basic-wall; material_ceiling:basic-ceiling; h: 0.2; polygon: [[1.2045952901797152,-2.623610206472563],[-4.819017911338092,-2.623610206472562],[-4.819017911338091,2.6280572170445193],[1.1811757742934788,2.6280572170445184],[1.1811757742934788,1.132159808818809],[2.4332468468648982,1.1321598088188092],[2.4332468468648982,-1.1366068193907664],[1.204595290179714,-1.136606819390766],[1.2045952901797152,-2.623610206472563]]; polygonHoles: ; hasCeiling: true; hCeiling: 2.4; usage: ; " visible="false" position="0 0 0" rotation="0 0 0" io3d-uuid="03b439b7-65b8-4915-a097-3b0c1e5080b8"></a-entity>
                 <a-entity id="floor3"io3d-polyfloor="material_top:black_white_tiles; material_side:basic-wall; material_ceiling:basic-ceiling; h: 0.2; polygon: [[1.2045952901797152,-2.623610206472563],[-4.819017911338092,-2.623610206472562],[-4.819017911338091,2.6280572170445193],[1.1811757742934788,2.6280572170445184],[1.1811757742934788,1.132159808818809],[2.4332468468648982,1.1321598088188092],[2.4332468468648982,-1.1366068193907664],[1.204595290179714,-1.136606819390766],[1.2045952901797152,-2.623610206472563]]; polygonHoles: ; hasCeiling: true; hCeiling: 2.4; usage: ; " visible="false" position="0 0 0" rotation="0 0 0" io3d-uuid="03b439b7-65b8-4915-a097-3b0c1e5080b8"></a-entity>
-                <a-entity id="changefloor" position="-1.124 0.2 0.234" rotation="-90.01166961505233 180.02333923010465 0" cursor-listener-tofloor="" io3d-floor="w:0.15;h:0.15;l:0.3;material_top:floor_tiles_001;material_side:floor_tiles_001;material_back:floor_tiles_001" scale="1.409 1.564 1"></a-entity>
-                <a-entity id="changefloor2" position="-1.121 0.2 -0.114" rotation="-90.01166961505233 180 0" cursor-listener-tofloor2="" io3d-floor="w:0.15;h:0.15;l:0.3;material_back:black_white_tiles;material_top:black_white_tiles;material_side:black_white_tiles" scale="1.427 1.596 1"></a-entity>
+                <a-entity id="changefloor" position="-1.124 0.2 0.234" rotation="-90.01166961505233 180.02333923010465 0" cursor-listener-tofloor="" io3d-floor="w:0.15;h:0.15;l:0.3;material_top:floor_tiles_001;material_side:floor_tiles_001;material_back:floor_tiles_001;hasCeiling:false" scale="1.409 1.564 1"></a-entity>
+                <a-entity id="changefloor2" position="-1.121 0.2 -0.114" rotation="-90.01166961505233 180 0" cursor-listener-tofloor2="" io3d-floor="w:0.15;h:0.15;l:0.3;material_back:black_white_tiles;material_top:black_white_tiles;material_side:black_white_tiles;hasCeiling:false" scale="1.427 1.596 1"></a-entity>
                 <a-entity id="removefurnish" shadow="receive:false" position="-1.389 0.2 -0.601" rotation="-90.01166961505233 138.19742018555456 0" cursor-listener-removefurnish="" geometry="primitive:plane;height:0.1;width:0.5" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:remove furniture;width:1" scale="0.936 1.231 1"></a-entity>
                 <a-entity id="addfurnish" shadow="receive:false" position="-1.818 0.2 -0.184" rotation="-90.01166961505233 138.19742018555456 0" cursor-listener-addfurnish="" geometry="primitive:plane;height:0.1;width:0.5" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:add furniture;width:1" scale="0.936 1.231 1" visible="false"></a-entity>
             </a-entity>
@@ -272,33 +276,17 @@ AFRAME.registerComponent('cursor-listener-addfurnish', {
                 <a-entity io3d-interior="" io3d-furniture="id: 8b5f7079-b42b-4689-9b37-3dd2946bb651" shadow="cast: true; receive: false" position="-3.1054687 3.552713678800501e-15 0.78125" rotation="0 0 0" io3d-uuid="7ee10c71-7be1-4ab9-b770-70e573038ec6"></a-entity>
                 <a-entity io3d-interior="" io3d-furniture="id: f12093e6-02d7-4a7f-9fb1-01f0073f7c5f" shadow="cast: true; receive: false" position="-4.5507812 3.552713678800501e-15 0.6835938" rotation="0 90 0" io3d-uuid="3e9a7224-0d35-4556-bb69-66a284972b33"></a-entity>
             </a-entity>
-            <a-entity id="towashroom" position="3.35 0.62 -0.39" cursor-listener-towashroom="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" rotation="-90 1.15 0" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:BATH;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="dintolounge" shadow="cast:true;receive:false" position="0.95 1.45 -5.89" rotation="4.01 171.31 177.62" cursor-listener-dintolounge="" geometry="radiusOuter:0.15;radiusInner:0.1;primitive:ring" material="color:#ff8000;side:double" scale="1 1 1" visible="true">
-                <a-entity text="color:#ff8000;align:center;zOffset:0;letterSpacing:5;lineHeight:50;value:LOUNGE;width:2" cursor-listener-dintolounge="" position="0 0 0" rotation="0 0 -122.61296815799618" scale="0.5 0.5 0.5" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="diningtoroom" shadow="cast:true;receive:false" position="-0.71 0.1 -5.64" rotation="-90 0 0" cursor-listener-diningtoroom="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:ROOM;width:2" position="0 0 0" rotation="0 0 151.83381570966816" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="roomtolounge" shadow="cast:true;receive:false" position="-3.92 1.3 -3.98" rotation="0 154.12564689019143 171.31438074411616" cursor-listener-roomtolounge="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="color:#ff8040;side:double" scale="1 1 1" visible="true">
-                <a-entity text="color:#ff8000;align:center;zOffset:0;letterSpacing:5;lineHeight:50;value:LOUNGE;width:2" position="0 0 0" rotation="0 0 -122.61" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="lontodining" shadow="cast:true;receive:false" position="-0.31 0.2 -1.17" rotation="-90 0 0" cursor-listener-lontodining="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:DINING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="lontostore" shadow="cast:true;receive:false" position="0.55 0.2 0.54" rotation="-90 0 0" cursor-listener-lontostore="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:STORE;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="livetoterrace" shadow="cast:true;receive:false" position="-0.29 0.2 1.97" rotation="-90 0 0" cursor-listener-livetoterrace="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:TERRACE;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="livetobed" shadow="cast:true;receive:false" position="-1.72 0.2 1.97" rotation="-90 0 0" cursor-listener-livetobed="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:BED;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
-            <a-entity id="bedtolive" shadow="cast:true;receive:false" position="-2.12 0.1 3.65" rotation="-90 0 0" cursor-listener-bedtolive="" geometry="primitive:ring;radiusInner:0.3;radiusOuter:0.5" material="side:double" scale="1 1 1" visible="true">
-                <a-entity text="align:center;zOffset:0;color:white;letterSpacing:5;lineHeight:50;value:LIVING;width:2" position="0 0 0" rotation="0 0 -122.61296815799618" scale="1 1 1" visible="true"></a-entity>
-            </a-entity>
+            <a-entity id="terractoloun" shadow="receive:false" position="0.903 0.1 3.895" rotation="-90 150 0" cursor-listener-dintolounge="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="value:LOUNGE;align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;width:10" scale="0.25 0.25 0.25"></a-entity>
+            <a-entity id="towashroom" shadow="receive:false" position="3.35 0.2 -0.39" rotation="-90.01166961505233 -30.710537819012128 0" cursor-listener-towashroom="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="value:BATH;align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;width:10" scale="0.35 0.35 0.35"></a-entity>
+            <a-entity id="dintolounge" shadow="receive:false" position="1.026 0.1 -5.804" rotation="-90.01166961505233 156.76125274779324 0" cursor-listener-dintolounge="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="value:LOUNGE;align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;width:10" scale="0.25 0.25 0.25"></a-entity>
+            <a-entity id="diningtoroom" shadow="receive:false" position="-0.096 0.1 -6.259" rotation="-90 150 0" cursor-listener-diningtoroom="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:ROOM;width:10" scale="0.25 0.25 0.25"></a-entity>
+            <a-entity id="roomtolounge" shadow="receive:false" position="-3.92 1.3 -3.98" rotation="0 154.12564689019143 0" cursor-listener-roomtolounge="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:LOUNGE;width:10" scale="0.25 0.25 0.25"></a-entity>
+            <a-entity id="washtoloung" shadow="receive:false" position="3.41 1.423 -3.313" rotation="0 -161.6886897859183 0" cursor-listener-roomtolounge="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:LOUNGE;width:10" scale="0.25 0.25 0.25"></a-entity>
+            <a-entity id="lontodining" shadow="receive:false" position="-0.31 0.2 -1.17" rotation="-90.01166961505233 -33.231552117587746 0" cursor-listener-lontodining="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:DINING;width:10" scale="0.35 0.35 0.35"></a-entity>
+            <a-entity id="lontostore" shadow="receive:false" position="0.55 0.2 0.54" rotation="-90.01166961505233 -106.16907943774154 0" cursor-listener-lontostore="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:STORE;width:10" scale="0.35 0.35 0.35"></a-entity>
+            <a-entity id="lontoterrace" shadow="receive:false" position="-0.29 0.2 1.759" rotation="-90.01166961505233 -144.1561812549151 0" cursor-listener-livetoterrace="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:TERRACE;width:10" scale="0.35 0.35 0.35"></a-entity>
+            <a-entity id="lontobed" shadow="receive:false" position="-1.72 0.2 1.97" rotation="-90.01166961505233 180.02333923010465 0" cursor-listener-livetobed="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:BED;width:10" scale="0.35 0.35 0.35"></a-entity>
+            <a-entity id="bedtolon" shadow="receive:false" position="-2.614 0.1 4.157" rotation="-86.74581018280664 15.584452027558394 161.28761932932673" cursor-listener-bedtolive="" geometry="primitive:circle" material="side:double;transparent:true;color:#000000" text__text="align:center;color:#00ff00;letterSpacing:1;lineHeight:50;side:double;value:LOUNGE;width:10" scale="0.2 0.2 0.2"></a-entity>
         </a-entity>
     </a-entity>
 </a-scene>
